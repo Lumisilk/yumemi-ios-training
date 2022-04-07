@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import YumemiWeather
 
 class WeatherViewController: UIViewController {
     
@@ -77,5 +78,16 @@ class WeatherViewController: UIViewController {
         
         closeButton.setTitle("Close", for: .normal)
         reloadButton.setTitle("Reload", for: .normal)
+        reloadButton.addAction(
+            UIAction(handler: { [weak self] _ in self?.reloadWeather() }),
+            for: .touchUpInside
+        )
+    }
+    
+    private func reloadWeather() {
+        let weatherName = YumemiWeather.fetchWeather()
+        if let icon = icon(for: weatherName) {
+            imageView.image = icon
+        }
     }
 }
