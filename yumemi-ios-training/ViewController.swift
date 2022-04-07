@@ -86,8 +86,6 @@ class WeatherViewController: UIViewController {
     
     private func reloadWeather() {
         let weatherName = YumemiWeather.fetchWeather()
-        if let icon = icon(for: weatherName) {
-            imageView.image = icon
-        }
+        imageView.image = WeatherUtility.icon(for: weatherName)
     }
 }
