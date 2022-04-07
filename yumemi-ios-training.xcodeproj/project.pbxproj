@@ -13,6 +13,7 @@
 		CE0E249627FE74BF00EDC258 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE0E249527FE74BF00EDC258 /* Assets.xcassets */; };
 		CE0E249927FE74BF00EDC258 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE0E249727FE74BF00EDC258 /* LaunchScreen.storyboard */; };
 		CE0E24A227FE79EC00EDC258 /* YumemiWeather in Frameworks */ = {isa = PBXBuildFile; productRef = CE0E24A127FE79EC00EDC258 /* YumemiWeather */; };
+		CE0E24A527FE7C4E00EDC258 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CE0E24A427FE7C4E00EDC258 /* SnapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE0E24A227FE79EC00EDC258 /* YumemiWeather in Frameworks */,
+				CE0E24A527FE7C4E00EDC258 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +86,7 @@
 			name = "yumemi-ios-training";
 			packageProductDependencies = (
 				CE0E24A127FE79EC00EDC258 /* YumemiWeather */,
+				CE0E24A427FE7C4E00EDC258 /* SnapKit */,
 			);
 			productName = "yumemi-ios-training";
 			productReference = CE0E248927FE74BE00EDC258 /* yumemi-ios-training.app */;
@@ -115,6 +118,7 @@
 			mainGroup = CE0E248027FE74BE00EDC258;
 			packageReferences = (
 				CE0E24A027FE79EC00EDC258 /* XCRemoteSwiftPackageReference "ios-training" */,
+				CE0E24A327FE7C4E00EDC258 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = CE0E248A27FE74BE00EDC258 /* Products */;
 			projectDirPath = "";
@@ -364,6 +368,14 @@
 				kind = branch;
 			};
 		};
+		CE0E24A327FE7C4E00EDC258 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -371,6 +383,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CE0E24A027FE79EC00EDC258 /* XCRemoteSwiftPackageReference "ios-training" */;
 			productName = YumemiWeather;
+		};
+		CE0E24A427FE7C4E00EDC258 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE0E24A327FE7C4E00EDC258 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
