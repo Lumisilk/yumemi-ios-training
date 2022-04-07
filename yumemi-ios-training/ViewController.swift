@@ -20,8 +20,11 @@ class WeatherViewController: UIViewController {
     let reloadButton = UIButton(type: .system)
     
     override func viewDidLoad() {
-        view.backgroundColor = .white
-        
+        addSubviewsAndConstraints()
+        setViewsProperties()
+    }
+    
+    private func addSubviewsAndConstraints() {
         view.addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.width.equalToSuperview().dividedBy(2)
@@ -60,6 +63,10 @@ class WeatherViewController: UIViewController {
             make.top.equalTo(redLabel.snp.bottom).offset(80)
             make.centerX.equalTo(redLabel)
         }
+    }
+    
+    private func setViewsProperties() {
+        view.backgroundColor = .white
         
         blueLabel.text = "--"
         blueLabel.textColor = .systemBlue
