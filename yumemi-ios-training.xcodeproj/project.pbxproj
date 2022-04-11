@@ -9,21 +9,23 @@
 /* Begin PBXBuildFile section */
 		CE0E248D27FE74BE00EDC258 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0E248C27FE74BE00EDC258 /* AppDelegate.swift */; };
 		CE0E248F27FE74BE00EDC258 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0E248E27FE74BE00EDC258 /* SceneDelegate.swift */; };
-		CE0E249127FE74BE00EDC258 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0E249027FE74BE00EDC258 /* ViewController.swift */; };
+		CE0E249127FE74BE00EDC258 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0E249027FE74BE00EDC258 /* WeatherViewController.swift */; };
 		CE0E249627FE74BF00EDC258 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE0E249527FE74BF00EDC258 /* Assets.xcassets */; };
 		CE0E249927FE74BF00EDC258 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE0E249727FE74BF00EDC258 /* LaunchScreen.storyboard */; };
 		CE0E24A227FE79EC00EDC258 /* YumemiWeather in Frameworks */ = {isa = PBXBuildFile; productRef = CE0E24A127FE79EC00EDC258 /* YumemiWeather */; };
 		CE0E24A527FE7C4E00EDC258 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CE0E24A427FE7C4E00EDC258 /* SnapKit */; };
+		CE0E24A927FE8CD200EDC258 /* WeatherUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0E24A827FE8CD200EDC258 /* WeatherUtility.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		CE0E248927FE74BE00EDC258 /* yumemi-ios-training.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "yumemi-ios-training.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE0E248C27FE74BE00EDC258 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE0E248E27FE74BE00EDC258 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		CE0E249027FE74BE00EDC258 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		CE0E249027FE74BE00EDC258 /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
 		CE0E249527FE74BF00EDC258 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE0E249827FE74BF00EDC258 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CE0E249A27FE74BF00EDC258 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE0E24A827FE8CD200EDC258 /* WeatherUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherUtility.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +62,8 @@
 			children = (
 				CE0E248C27FE74BE00EDC258 /* AppDelegate.swift */,
 				CE0E248E27FE74BE00EDC258 /* SceneDelegate.swift */,
-				CE0E249027FE74BE00EDC258 /* ViewController.swift */,
+				CE0E249027FE74BE00EDC258 /* WeatherViewController.swift */,
+				CE0E24A827FE8CD200EDC258 /* WeatherUtility.swift */,
 				CE0E249527FE74BF00EDC258 /* Assets.xcassets */,
 				CE0E249727FE74BF00EDC258 /* LaunchScreen.storyboard */,
 				CE0E249A27FE74BF00EDC258 /* Info.plist */,
@@ -146,9 +149,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE0E249127FE74BE00EDC258 /* ViewController.swift in Sources */,
+				CE0E249127FE74BE00EDC258 /* WeatherViewController.swift in Sources */,
 				CE0E248D27FE74BE00EDC258 /* AppDelegate.swift in Sources */,
 				CE0E248F27FE74BE00EDC258 /* SceneDelegate.swift in Sources */,
+				CE0E24A927FE8CD200EDC258 /* WeatherUtility.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
