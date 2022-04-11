@@ -14,8 +14,8 @@ class WeatherViewController: UIViewController {
     /// A LayoutGuide containing the imageView and two labels.
     let infoContainerLayoutGuide = UILayoutGuide()
     let imageView = UIImageView()
-    let blueLabel = UILabel()
-    let redLabel = UILabel()
+    let minTempLabel = UILabel()
+    let maxTempLabel = UILabel()
     
     let closeButton = UIButton(type: .system)
     let reloadButton = UIButton(type: .system)
@@ -32,15 +32,15 @@ class WeatherViewController: UIViewController {
             make.height.equalTo(imageView.snp.width)
         }
         
-        view.addSubview(blueLabel)
-        blueLabel.snp.makeConstraints { make in
+        view.addSubview(minTempLabel)
+        minTempLabel.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom)
             make.leading.equalTo(imageView)
             make.width.equalTo(imageView).dividedBy(2)
         }
         
-        view.addSubview(redLabel)
-        redLabel.snp.makeConstraints { make in
+        view.addSubview(maxTempLabel)
+        maxTempLabel.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom)
             make.trailing.equalTo(imageView)
             make.width.equalTo(imageView).dividedBy(2)
@@ -49,32 +49,34 @@ class WeatherViewController: UIViewController {
         view.addLayoutGuide(infoContainerLayoutGuide)
         infoContainerLayoutGuide.snp.makeConstraints { make in
             make.top.leading.trailing.equalTo(imageView)
-            make.bottom.equalTo(blueLabel)
+            make.bottom.equalTo(minTempLabel)
             make.center.equalToSuperview()
         }
         
         view.addSubview(closeButton)
         closeButton.snp.makeConstraints { make in
-            make.top.equalTo(blueLabel.snp.bottom).offset(80)
-            make.centerX.equalTo(blueLabel)
+            make.top.equalTo(minTempLabel.snp.bottom).offset(80)
+            make.centerX.equalTo(minTempLabel)
         }
         
         view.addSubview(reloadButton)
         reloadButton.snp.makeConstraints { make in
-            make.top.equalTo(redLabel.snp.bottom).offset(80)
-            make.centerX.equalTo(redLabel)
+            make.top.equalTo(maxTempLabel.snp.bottom).offset(80)
+            make.centerX.equalTo(maxTempLabel)
         }
     }
     
     private func setViewsProperties() {
         view.backgroundColor = .white
         
-        blueLabel.text = "--"
-        blueLabel.textColor = .systemBlue
-        blueLabel.textAlignment = .center
-        redLabel.text = "--"
-        redLabel.textColor = .systemRed
-        redLabel.textAlignment = .center
+        minTempLabel.text = "--"
+        minTempLabel.textColor = .systemBlue
+        minTempLabel.textAlignment = .center
+        minTempLabel.font = .preferredFont(forTextStyle: .title1)
+        maxTempLabel.text = "--"
+        maxTempLabel.textColor = .systemRed
+        maxTempLabel.textAlignment = .center
+        maxTempLabel.font = .preferredFont(forTextStyle: .title1)
         
         closeButton.setTitle(NSLocalizedString("Close", comment: ""), for: .normal)
         reloadButton.setTitle(NSLocalizedString("Reload", comment: ""), for: .normal)
@@ -86,8 +88,22 @@ class WeatherViewController: UIViewController {
     
     private func reloadWeather() {
         do {
-            let weatherName = try YumemiWeather.fetchWeather(at: "Tokyo")
-            imageView.image = Weather.icon(for: weatherName)
+            let requestString = """
+                {
+                    "area": "tokyo",
+                    "date": "\(Weather.dateFormatter.string(from: Date()))"
+                }
+            """
+            let jsonResult = try YumemiWeather.fetchWeather(requestString)
+            if let data = jsonResult.data(using: .utf8),
+               let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+               let min_temp = json["min_temp"] as? Int,
+               let max_temp = json["max_temp"] as? Int,
+               let weatherName = json["weather"] as? String {
+                minTempLabel.text = String(min_temp)
+                maxTempLabel.text = String(max_temp)
+                imageView.image = Weather.icon(for: weatherName)
+            }
         } catch {
             presentError(error)
         }

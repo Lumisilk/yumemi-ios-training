@@ -17,4 +17,10 @@ enum Weather {
             return image
         }
     }
+    
+    static let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+        return dateFormatter
+    }()
 }
