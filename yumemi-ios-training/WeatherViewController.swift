@@ -76,8 +76,8 @@ class WeatherViewController: UIViewController {
         redLabel.textColor = .systemRed
         redLabel.textAlignment = .center
         
-        closeButton.setTitle("Close", for: .normal)
-        reloadButton.setTitle("Reload", for: .normal)
+        closeButton.setTitle(NSLocalizedString("Close", comment: ""), for: .normal)
+        reloadButton.setTitle(NSLocalizedString("Reload", comment: ""), for: .normal)
         reloadButton.addAction(
             UIAction(handler: { [weak self] _ in self?.reloadWeather() }),
             for: .touchUpInside
@@ -85,7 +85,27 @@ class WeatherViewController: UIViewController {
     }
     
     private func reloadWeather() {
-        let weatherName = YumemiWeather.fetchWeather()
-        imageView.image = Weather.icon(for: weatherName)
+        do {
+            let weatherName = try YumemiWeather.fetchWeather(at: "Tokyo")
+            imageView.image = Weather.icon(for: weatherName)
+        } catch {
+            presentError(error)
+        }
+    }
+    
+    private func presentError(_ error: Error) {
+        let alertController = UIAlertController(
+            title: NSLocalizedString("Oops!", comment: "The title for errors."),
+            message: error.localizedDescription,
+            preferredStyle: .alert
+        )
+        alertController.addAction(
+            UIAlertAction(
+                title: NSLocalizedString("OK", comment: ""),
+                style: .default,
+                handler: nil
+            )
+        )
+        present(alertController, animated: true, completion: nil)
     }
 }

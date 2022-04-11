@@ -1,10 +1,3 @@
-//
-//  WeatherUtility.swift
-//  yumemi-ios-training
-//
-//  Created by Zhou Chang on 2022/04/07.
-//
-
 import UIKit
 
 /// A namespace for weather's properties and assistant functions.
