@@ -1,6 +1,11 @@
 import Foundation
 import YumemiWeather
 
+struct WeatherRequest: Encodable {
+    let area: String
+    let date: Date
+}
+
 final class WeatherClient {
     
     func fetchWeather(area: String, date: Date = Date()) throws -> Weather {

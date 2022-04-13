@@ -2,11 +2,6 @@ import Foundation
 import UIKit
 import YumemiWeather
 
-struct WeatherRequest: Encodable {
-    let area: String
-    let date: Date
-}
-
 struct Weather: Decodable {
     let name: String
     let maxTemperature: Int
