@@ -11,7 +11,7 @@ import YumemiWeather
 
 class WeatherViewController: UIViewController {
     
-    /// A LayoutGuide containing the imageView and two labels.
+    /// A LayoutGuide contains the imageView and two temperature labels.
     let infoContainerLayoutGuide = UILayoutGuide()
     let imageView = UIImageView()
     let minTemperatureLabel = UILabel()
@@ -19,6 +19,8 @@ class WeatherViewController: UIViewController {
     
     let closeButton = UIButton(type: .system)
     let reloadButton = UIButton(type: .system)
+    
+    var client = WeatherClient()
     
     override func viewDidLoad() {
         addSubviewsAndConstraints()
@@ -88,13 +90,17 @@ class WeatherViewController: UIViewController {
     
     private func reloadWeather() {
         do {
-            let response = try Weather.fetchWeather(area: "Tokyo")
-            minTemperatureLabel.text = String(response.minTemperature)
-            maxTemperatureLabel.text = String(response.maxTemperature)
-            imageView.image = Weather.icon(for: response.weatherName)
+            let weather = try client.fetchWeather(area: "Tokyo")
+            showWeather(weather)
         } catch {
             presentError(error)
         }
+    }
+    
+    private func showWeather(_ weather: Weather) {
+        minTemperatureLabel.text = String(weather.minTemperature)
+        maxTemperatureLabel.text = String(weather.maxTemperature)
+        imageView.image = weather.icon
     }
     
     private func presentError(_ error: Error) {

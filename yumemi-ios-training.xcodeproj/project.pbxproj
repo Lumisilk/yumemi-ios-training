@@ -15,6 +15,7 @@
 		CE0E24A227FE79EC00EDC258 /* YumemiWeather in Frameworks */ = {isa = PBXBuildFile; productRef = CE0E24A127FE79EC00EDC258 /* YumemiWeather */; };
 		CE0E24A527FE7C4E00EDC258 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CE0E24A427FE7C4E00EDC258 /* SnapKit */; };
 		CE0E24A927FE8CD200EDC258 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0E24A827FE8CD200EDC258 /* Weather.swift */; };
+		CE6289562806B7E000518268 /* WeatherClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6289552806B7E000518268 /* WeatherClient.swift */; };
 		CEC4851A2803B50C0093698E /* WeatherError+Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC485192803B50C0093698E /* WeatherError+Localized.swift */; };
 		CEC4851C2803B5410093698E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEC4851B2803B5410093698E /* Localizable.strings */; };
 /* End PBXBuildFile section */
@@ -28,6 +29,7 @@
 		CE0E249827FE74BF00EDC258 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CE0E249A27FE74BF00EDC258 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE0E24A827FE8CD200EDC258 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
+		CE6289552806B7E000518268 /* WeatherClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherClient.swift; sourceTree = "<group>"; };
 		CEC485192803B50C0093698E /* WeatherError+Localized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeatherError+Localized.swift"; sourceTree = "<group>"; };
 		CEC4851B2803B5410093698E /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -67,6 +69,7 @@
 				CE0E248C27FE74BE00EDC258 /* AppDelegate.swift */,
 				CE0E248E27FE74BE00EDC258 /* SceneDelegate.swift */,
 				CE0E24A827FE8CD200EDC258 /* Weather.swift */,
+				CE6289552806B7E000518268 /* WeatherClient.swift */,
 				CEC485192803B50C0093698E /* WeatherError+Localized.swift */,
 				CE0E249027FE74BE00EDC258 /* WeatherViewController.swift */,
 				CE0E249527FE74BF00EDC258 /* Assets.xcassets */,
@@ -161,6 +164,7 @@
 				CEC4851A2803B50C0093698E /* WeatherError+Localized.swift in Sources */,
 				CE0E248F27FE74BE00EDC258 /* SceneDelegate.swift in Sources */,
 				CE0E24A927FE8CD200EDC258 /* Weather.swift in Sources */,
+				CE6289562806B7E000518268 /* WeatherClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
