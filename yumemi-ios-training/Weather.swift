@@ -1,4 +1,6 @@
+import Foundation
 import UIKit
+import YumemiWeather
 
 /// A namespace for weather's properties and assistant functions.
 enum Weather {
@@ -15,6 +17,38 @@ enum Weather {
             return image?.withTintColor(.systemBlue)
         default:
             return image
+        }
+    }
+    
+    static let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+        return dateFormatter
+    }()
+    
+    static func fetchWeather(
+        area: String,
+        date: Date = Date()
+    ) throws -> (
+        minTemperature: Int,
+        maxTemperature: Int,
+        weatherName: String
+    )? {
+        let requestString = """
+            {
+                "area": "\(area)",
+                "date": "\(dateFormatter.string(from: date))"
+            }
+        """
+        let jsonResult = try YumemiWeather.fetchWeather(requestString)
+        if let data = jsonResult.data(using: .utf8),
+           let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+           let minTemperature = json["min_temp"] as? Int,
+           let maxTemperature = json["max_temp"] as? Int,
+           let weatherName = json["weather"] as? String {
+            return (minTemperature, maxTemperature, weatherName)
+        } else {
+            return nil
         }
     }
 }
