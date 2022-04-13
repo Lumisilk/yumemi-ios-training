@@ -2,6 +2,25 @@ import Foundation
 import UIKit
 import YumemiWeather
 
+struct WeatherRequest: Encodable {
+    let area: String
+    let date: Date
+}
+
+struct WeatherResponse: Decodable {
+    let weatherName: String
+    let maxTemperature: Int
+    let minTemperature: Int
+    let date: Date
+    
+    enum CodingKeys: String, CodingKey {
+        case weatherName = "weather"
+        case maxTemperature = "max_temp"
+        case minTemperature = "min_temp"
+        case date
+    }
+}
+
 /// A namespace for weather's properties and assistant functions.
 enum Weather {
     
@@ -26,29 +45,28 @@ enum Weather {
         return dateFormatter
     }()
     
-    static func fetchWeather(
-        area: String,
-        date: Date = Date()
-    ) throws -> (
-        minTemperature: Int,
-        maxTemperature: Int,
-        weatherName: String
-    )? {
-        let requestString = """
-            {
-                "area": "\(area)",
-                "date": "\(dateFormatter.string(from: date))"
+    static let decoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(dateFormatter)
+        return decoder
+    }()
+    
+    static let encoder: JSONEncoder = {
+        let encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+        encoder.dateEncodingStrategy = .formatted(dateFormatter)
+        return encoder
+    }()
+    
+    static func fetchWeather(area: String, date: Date = Date()) throws -> WeatherResponse {
+        let request = WeatherRequest(area: area, date: date)
+        let data = try encoder.encode(request)
+        if let requestString = String(data: data, encoding: .utf8) {
+            let reponseString = try YumemiWeather.fetchWeather(requestString)
+            if let reponseData = reponseString.data(using: .utf8) {
+                return try decoder.decode(WeatherResponse.self, from: reponseData)
             }
-        """
-        let jsonResult = try YumemiWeather.fetchWeather(requestString)
-        if let data = jsonResult.data(using: .utf8),
-           let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
-           let minTemperature = json["min_temp"] as? Int,
-           let maxTemperature = json["max_temp"] as? Int,
-           let weatherName = json["weather"] as? String {
-            return (minTemperature, maxTemperature, weatherName)
-        } else {
-            return nil
         }
+        throw YumemiWeatherError.unknownError
     }
 }

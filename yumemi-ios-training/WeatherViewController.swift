@@ -88,11 +88,10 @@ class WeatherViewController: UIViewController {
     
     private func reloadWeather() {
         do {
-            if let weatherResult = try Weather.fetchWeather(area: "Tokyo") {
-                minTemperatureLabel.text = String(weatherResult.minTemperature)
-                maxTemperatureLabel.text = String(weatherResult.maxTemperature)
-                imageView.image = Weather.icon(for: weatherResult.weatherName)
-            }
+            let response = try Weather.fetchWeather(area: "Tokyo")
+            minTemperatureLabel.text = String(response.minTemperature)
+            maxTemperatureLabel.text = String(response.maxTemperature)
+            imageView.image = Weather.icon(for: response.weatherName)
         } catch {
             presentError(error)
         }

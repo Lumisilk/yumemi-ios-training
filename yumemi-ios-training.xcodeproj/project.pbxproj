@@ -66,9 +66,9 @@
 			children = (
 				CE0E248C27FE74BE00EDC258 /* AppDelegate.swift */,
 				CE0E248E27FE74BE00EDC258 /* SceneDelegate.swift */,
-				CE0E249027FE74BE00EDC258 /* WeatherViewController.swift */,
 				CE0E24A827FE8CD200EDC258 /* Weather.swift */,
 				CEC485192803B50C0093698E /* WeatherError+Localized.swift */,
+				CE0E249027FE74BE00EDC258 /* WeatherViewController.swift */,
 				CE0E249527FE74BF00EDC258 /* Assets.xcassets */,
 				CE0E249727FE74BF00EDC258 /* LaunchScreen.storyboard */,
 				CE0E249A27FE74BF00EDC258 /* Info.plist */,
