@@ -20,6 +20,16 @@ class WeatherViewController: UIViewController {
     let closeButton = UIButton(type: .system)
     let reloadButton = UIButton(type: .system)
     
+    let dateLabel = UILabel()
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .gregorian)
+        formatter.locale = Locale(identifier: "ja")
+        formatter.dateStyle = .long
+        formatter.timeStyle = .short
+        return formatter
+    }()
+    
     var client = WeatherClient()
     
     override func viewDidLoad() {
@@ -66,6 +76,12 @@ class WeatherViewController: UIViewController {
             make.top.equalTo(maxTemperatureLabel.snp.bottom).offset(80)
             make.centerX.equalTo(maxTemperatureLabel)
         }
+        
+        view.addSubview(dateLabel)
+        dateLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(infoContainerLayoutGuide.snp.top).offset(-40)
+        }
     }
     
     private func setViewsProperties() {
@@ -79,6 +95,9 @@ class WeatherViewController: UIViewController {
         maxTemperatureLabel.textColor = .systemRed
         maxTemperatureLabel.textAlignment = .center
         maxTemperatureLabel.font = .preferredFont(forTextStyle: .title1)
+        
+        dateLabel.text = "--"
+        dateLabel.textAlignment = .center
         
         closeButton.setTitle(NSLocalizedString("Close", comment: ""), for: .normal)
         reloadButton.setTitle(NSLocalizedString("Reload", comment: ""), for: .normal)
@@ -101,6 +120,7 @@ class WeatherViewController: UIViewController {
         minTemperatureLabel.text = String(weather.minTemperature)
         maxTemperatureLabel.text = String(weather.maxTemperature)
         imageView.image = weather.icon
+        dateLabel.text = dateFormatter.string(from: weather.date)
     }
     
     private func presentError(_ error: Error) {

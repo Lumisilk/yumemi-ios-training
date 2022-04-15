@@ -25,6 +25,7 @@ final class WeatherClient {
 extension WeatherClient {
     static let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
+        dateFormatter.calendar = Calendar(identifier: Calendar.Identifier.gregorian)
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
         return dateFormatter
     }()
