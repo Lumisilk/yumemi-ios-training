@@ -11,14 +11,26 @@ import YumemiWeather
 
 class WeatherViewController: UIViewController {
     
-    /// A LayoutGuide containing the imageView and two labels.
+    /// A LayoutGuide contains the imageView and two temperature labels.
     let infoContainerLayoutGuide = UILayoutGuide()
-    let imageView = UIImageView()
+    let weatherIconView = WeatherIconView()
     let minTemperatureLabel = UILabel()
     let maxTemperatureLabel = UILabel()
     
     let closeButton = UIButton(type: .system)
     let reloadButton = UIButton(type: .system)
+    
+    let dateLabel = UILabel()
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .gregorian)
+        formatter.locale = Locale(identifier: "ja")
+        formatter.dateStyle = .long
+        formatter.timeStyle = .short
+        return formatter
+    }()
+    
+    var client = WeatherClient()
     
     override func viewDidLoad() {
         addSubviewsAndConstraints()
@@ -26,29 +38,29 @@ class WeatherViewController: UIViewController {
     }
     
     private func addSubviewsAndConstraints() {
-        view.addSubview(imageView)
-        imageView.snp.makeConstraints { make in
+        view.addSubview(weatherIconView)
+        weatherIconView.snp.makeConstraints { make in
             make.width.equalToSuperview().dividedBy(2)
-            make.height.equalTo(imageView.snp.width)
+            make.height.equalTo(weatherIconView.snp.width)
         }
         
         view.addSubview(minTemperatureLabel)
         minTemperatureLabel.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom)
-            make.leading.equalTo(imageView)
-            make.width.equalTo(imageView).dividedBy(2)
+            make.top.equalTo(weatherIconView.snp.bottom)
+            make.leading.equalTo(weatherIconView)
+            make.width.equalTo(weatherIconView).dividedBy(2)
         }
         
         view.addSubview(maxTemperatureLabel)
         maxTemperatureLabel.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom)
-            make.trailing.equalTo(imageView)
-            make.width.equalTo(imageView).dividedBy(2)
+            make.top.equalTo(weatherIconView.snp.bottom)
+            make.trailing.equalTo(weatherIconView)
+            make.width.equalTo(weatherIconView).dividedBy(2)
         }
         
         view.addLayoutGuide(infoContainerLayoutGuide)
         infoContainerLayoutGuide.snp.makeConstraints { make in
-            make.top.leading.trailing.equalTo(imageView)
+            make.top.leading.trailing.equalTo(weatherIconView)
             make.bottom.equalTo(minTemperatureLabel)
             make.center.equalToSuperview()
         }
@@ -64,6 +76,12 @@ class WeatherViewController: UIViewController {
             make.top.equalTo(maxTemperatureLabel.snp.bottom).offset(80)
             make.centerX.equalTo(maxTemperatureLabel)
         }
+        
+        view.addSubview(dateLabel)
+        dateLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(infoContainerLayoutGuide.snp.top).offset(-40)
+        }
     }
     
     private func setViewsProperties() {
@@ -78,6 +96,9 @@ class WeatherViewController: UIViewController {
         maxTemperatureLabel.textAlignment = .center
         maxTemperatureLabel.font = .preferredFont(forTextStyle: .title1)
         
+        dateLabel.text = "--"
+        dateLabel.textAlignment = .center
+        
         closeButton.setTitle(NSLocalizedString("Close", comment: ""), for: .normal)
         reloadButton.setTitle(NSLocalizedString("Reload", comment: ""), for: .normal)
         reloadButton.addAction(
@@ -88,14 +109,18 @@ class WeatherViewController: UIViewController {
     
     private func reloadWeather() {
         do {
-            if let weatherResult = try Weather.fetchWeather(area: "Tokyo") {
-                minTemperatureLabel.text = String(weatherResult.minTemperature)
-                maxTemperatureLabel.text = String(weatherResult.maxTemperature)
-                imageView.image = Weather.icon(for: weatherResult.weatherName)
-            }
+            let weather = try client.fetchWeather(area: "Tokyo")
+            showWeather(weather)
         } catch {
             presentError(error)
         }
+    }
+    
+    private func showWeather(_ weather: Weather) {
+        minTemperatureLabel.text = String(weather.minTemperature)
+        maxTemperatureLabel.text = String(weather.maxTemperature)
+        weatherIconView.setIcon(with: weather.name)
+        dateLabel.text = dateFormatter.string(from: weather.date)
     }
     
     private func presentError(_ error: Error) {
