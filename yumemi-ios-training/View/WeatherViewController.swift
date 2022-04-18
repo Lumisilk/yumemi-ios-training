@@ -34,6 +34,13 @@ class WeatherViewController: UIViewController {
     override func viewDidLoad() {
         addSubviewsAndConstraints()
         setViewsProperties()
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(reloadWeather),
+            name: UIApplication.willEnterForegroundNotification,
+            object: nil
+        )
     }
     
     private func addSubviewsAndConstraints() {
@@ -110,7 +117,7 @@ class WeatherViewController: UIViewController {
         )
     }
     
-    private func reloadWeather() {
+    @objc func reloadWeather() {
         do {
             let weather = try client.fetchWeather(area: "Tokyo")
             showWeather(weather)
