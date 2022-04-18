@@ -7,7 +7,6 @@
 
 import UIKit
 import SnapKit
-import YumemiWeather
 
 class WeatherViewController: UIViewController {
     
@@ -100,6 +99,10 @@ class WeatherViewController: UIViewController {
         dateLabel.textAlignment = .center
         
         closeButton.setTitle(NSLocalizedString("Close", comment: ""), for: .normal)
+        closeButton.addAction(
+            UIAction(handler: { [weak self] _ in self?.dismiss(animated: true, completion: nil) }),
+            for: .touchUpInside
+        )
         reloadButton.setTitle(NSLocalizedString("Reload", comment: ""), for: .normal)
         reloadButton.addAction(
             UIAction(handler: { [weak self] _ in self?.reloadWeather() }),
@@ -112,7 +115,7 @@ class WeatherViewController: UIViewController {
             let weather = try client.fetchWeather(area: "Tokyo")
             showWeather(weather)
         } catch {
-            presentError(error)
+            presentError(error, showErrorDetail: false)
         }
     }
     
@@ -123,10 +126,11 @@ class WeatherViewController: UIViewController {
         dateLabel.text = dateFormatter.string(from: weather.date)
     }
     
-    private func presentError(_ error: Error) {
+    private func presentError(_ error: Error, showErrorDetail: Bool) {
+        let errorMessage = showErrorDetail ? error.localizedDescription: NSLocalizedString("An error occurred.", comment: "")
         let alertController = UIAlertController(
             title: NSLocalizedString("Oops!", comment: "The title for errors."),
-            message: error.localizedDescription,
+            message: errorMessage,
             preferredStyle: .alert
         )
         alertController.addAction(
