@@ -115,7 +115,7 @@ class WeatherViewController: UIViewController {
             let weather = try client.fetchWeather(area: "Tokyo")
             showWeather(weather)
         } catch {
-            presentError(error, describeError: false)
+            presentError(error, showErrorDetail: false)
         }
     }
     
@@ -126,8 +126,8 @@ class WeatherViewController: UIViewController {
         dateLabel.text = dateFormatter.string(from: weather.date)
     }
     
-    private func presentError(_ error: Error, describeError: Bool) {
-        let errorMessage = describeError ? error.localizedDescription: NSLocalizedString("An unknown error occurred.", comment: "")
+    private func presentError(_ error: Error, showErrorDetail: Bool) {
+        let errorMessage = showErrorDetail ? error.localizedDescription: NSLocalizedString("An error occurred.", comment: "")
         let alertController = UIAlertController(
             title: NSLocalizedString("Oops!", comment: "The title for errors."),
             message: errorMessage,
