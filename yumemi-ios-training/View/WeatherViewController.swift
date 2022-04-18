@@ -13,7 +13,7 @@ class WeatherViewController: UIViewController {
     
     /// A LayoutGuide contains the imageView and two temperature labels.
     let infoContainerLayoutGuide = UILayoutGuide()
-    let imageView = UIImageView()
+    let weatherIconView = WeatherIconView()
     let minTemperatureLabel = UILabel()
     let maxTemperatureLabel = UILabel()
     
@@ -38,29 +38,29 @@ class WeatherViewController: UIViewController {
     }
     
     private func addSubviewsAndConstraints() {
-        view.addSubview(imageView)
-        imageView.snp.makeConstraints { make in
+        view.addSubview(weatherIconView)
+        weatherIconView.snp.makeConstraints { make in
             make.width.equalToSuperview().dividedBy(2)
-            make.height.equalTo(imageView.snp.width)
+            make.height.equalTo(weatherIconView.snp.width)
         }
         
         view.addSubview(minTemperatureLabel)
         minTemperatureLabel.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom)
-            make.leading.equalTo(imageView)
-            make.width.equalTo(imageView).dividedBy(2)
+            make.top.equalTo(weatherIconView.snp.bottom)
+            make.leading.equalTo(weatherIconView)
+            make.width.equalTo(weatherIconView).dividedBy(2)
         }
         
         view.addSubview(maxTemperatureLabel)
         maxTemperatureLabel.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom)
-            make.trailing.equalTo(imageView)
-            make.width.equalTo(imageView).dividedBy(2)
+            make.top.equalTo(weatherIconView.snp.bottom)
+            make.trailing.equalTo(weatherIconView)
+            make.width.equalTo(weatherIconView).dividedBy(2)
         }
         
         view.addLayoutGuide(infoContainerLayoutGuide)
         infoContainerLayoutGuide.snp.makeConstraints { make in
-            make.top.leading.trailing.equalTo(imageView)
+            make.top.leading.trailing.equalTo(weatherIconView)
             make.bottom.equalTo(minTemperatureLabel)
             make.center.equalToSuperview()
         }
@@ -119,7 +119,7 @@ class WeatherViewController: UIViewController {
     private func showWeather(_ weather: Weather) {
         minTemperatureLabel.text = String(weather.minTemperature)
         maxTemperatureLabel.text = String(weather.maxTemperature)
-        imageView.image = weather.icon
+        weatherIconView.setIcon(with: weather.name)
         dateLabel.text = dateFormatter.string(from: weather.date)
     }
     
