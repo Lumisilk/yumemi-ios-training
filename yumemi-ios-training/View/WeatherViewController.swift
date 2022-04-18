@@ -7,7 +7,6 @@
 
 import UIKit
 import SnapKit
-import YumemiWeather
 
 class WeatherViewController: UIViewController {
     
@@ -100,6 +99,10 @@ class WeatherViewController: UIViewController {
         dateLabel.textAlignment = .center
         
         closeButton.setTitle(NSLocalizedString("Close", comment: ""), for: .normal)
+        closeButton.addAction(
+            UIAction(handler: { [weak self] _ in self?.dismiss(animated: true, completion: nil) }),
+            for: .touchUpInside
+        )
         reloadButton.setTitle(NSLocalizedString("Reload", comment: ""), for: .normal)
         reloadButton.addAction(
             UIAction(handler: { [weak self] _ in self?.reloadWeather() }),
