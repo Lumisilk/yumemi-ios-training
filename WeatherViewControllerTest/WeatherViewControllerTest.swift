@@ -28,6 +28,8 @@ class WeatherViewControllerTest: XCTestCase {
         
         let renderedImageData = viewController.weatherIconView.image?.pngData()
         let expectedImageData = UIImage(named: "icon-sunny")?.pngData()
+        XCTAssertNotNil(renderedImageData)
+        XCTAssertNotNil(expectedImageData)
         XCTAssertEqual(renderedImageData, expectedImageData)
     }
     
@@ -40,6 +42,8 @@ class WeatherViewControllerTest: XCTestCase {
         
         let renderedImageData = viewController.weatherIconView.image?.pngData()
         let expectedImageData = UIImage(named: "icon-rainy")?.pngData()
+        XCTAssertNotNil(renderedImageData)
+        XCTAssertNotNil(expectedImageData)
         XCTAssertEqual(renderedImageData, expectedImageData)
     }
     
@@ -52,6 +56,8 @@ class WeatherViewControllerTest: XCTestCase {
         
         let renderedImageData = viewController.weatherIconView.image?.pngData()
         let expectedImageData = UIImage(named: "icon-cloudy")?.pngData()
+        XCTAssertNotNil(renderedImageData)
+        XCTAssertNotNil(expectedImageData)
         XCTAssertEqual(renderedImageData, expectedImageData)
     }
     
