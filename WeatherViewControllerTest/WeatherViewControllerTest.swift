@@ -31,6 +31,7 @@ class WeatherViewControllerTest: XCTestCase {
         XCTAssertNotNil(renderedImageData)
         XCTAssertNotNil(expectedImageData)
         XCTAssertEqual(renderedImageData, expectedImageData)
+        XCTAssertEqual(viewController.weatherIconView.tintColor, .systemRed)
     }
     
     func testRainyIcon() throws {
@@ -45,6 +46,7 @@ class WeatherViewControllerTest: XCTestCase {
         XCTAssertNotNil(renderedImageData)
         XCTAssertNotNil(expectedImageData)
         XCTAssertEqual(renderedImageData, expectedImageData)
+        XCTAssertEqual(viewController.weatherIconView.tintColor, .systemBlue)
     }
     
     func testCloudyIcon() throws {
@@ -59,6 +61,7 @@ class WeatherViewControllerTest: XCTestCase {
         XCTAssertNotNil(renderedImageData)
         XCTAssertNotNil(expectedImageData)
         XCTAssertEqual(renderedImageData, expectedImageData)
+        XCTAssertEqual(viewController.weatherIconView.tintColor, .systemGray)
     }
     
     func testTemperatureLabel() throws {
