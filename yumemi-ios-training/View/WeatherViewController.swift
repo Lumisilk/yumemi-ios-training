@@ -29,7 +29,16 @@ class WeatherViewController: UIViewController {
         return formatter
     }()
     
-    var client = WeatherClient()
+    var weatherModel: WeatherModel
+    
+    init(weatherModel: WeatherModel) {
+        self.weatherModel = weatherModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         addSubviewsAndConstraints()
@@ -119,7 +128,7 @@ class WeatherViewController: UIViewController {
     
     @objc func reloadWeather() {
         do {
-            let weather = try client.fetchWeather(area: "Tokyo")
+            let weather = try weatherModel.fetchWeather(area: "Tokyo", date: Date())
             showWeather(weather)
         } catch {
             presentError(error, showErrorDetail: false)
