@@ -1,7 +1,7 @@
 import Foundation
 import YumemiWeather
 
-struct WeatherRequest: Encodable {
+struct WeatherRequest: Codable, Equatable {
     let area: String
     let date: Date
 }
@@ -31,7 +31,6 @@ extension WeatherClient {
     
     static let encoder: JSONEncoder = {
         let encoder = JSONEncoder()
-        encoder.keyEncodingStrategy = .convertToSnakeCase
         encoder.dateEncodingStrategy = .iso8601
         return encoder
     }()
