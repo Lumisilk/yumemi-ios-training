@@ -12,21 +12,21 @@
 		CE0E249127FE74BE00EDC258 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0E249027FE74BE00EDC258 /* WeatherViewController.swift */; };
 		CE0E249627FE74BF00EDC258 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE0E249527FE74BF00EDC258 /* Assets.xcassets */; };
 		CE0E249927FE74BF00EDC258 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE0E249727FE74BF00EDC258 /* LaunchScreen.storyboard */; };
-		CE0E24A227FE79EC00EDC258 /* YumemiWeather in Frameworks */ = {isa = PBXBuildFile; productRef = CE0E24A127FE79EC00EDC258 /* YumemiWeather */; };
-		CE0E24A527FE7C4E00EDC258 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CE0E24A427FE7C4E00EDC258 /* SnapKit */; };
 		CE0E24A927FE8CD200EDC258 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0E24A827FE8CD200EDC258 /* Weather.swift */; };
 		CE6289562806B7E000518268 /* WeatherRequest+Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6289552806B7E000518268 /* WeatherRequest+Client.swift */; };
-		CE9DA70B280E3CB700DA8F9C /* WeatherViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9DA70A280E3CB700DA8F9C /* WeatherViewControllerTest.swift */; };
-		CE9DA712280E3D3200DA8F9C /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9DA711280E3D3200DA8F9C /* WeatherModel.swift */; };
-		CE9DA714280E3FFE00DA8F9C /* WeatherCodableTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9DA713280E3FFE00DA8F9C /* WeatherCodableTest.swift */; };
+		CE74CA06280E822500EFAA4D /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE74CA05280E822500EFAA4D /* WeatherModel.swift */; };
+		CE74CA2A280E846A00EFAA4D /* WeatherViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE74CA28280E846A00EFAA4D /* WeatherViewControllerTest.swift */; };
+		CE74CA2B280E846A00EFAA4D /* WeatherCodableTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE74CA29280E846A00EFAA4D /* WeatherCodableTest.swift */; };
 		CEA4A5F2280D02FB00D5A45D /* WeatherIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA4A5F1280D02FB00D5A45D /* WeatherIconView.swift */; };
 		CEA4A5F4280D2A7400D5A45D /* EmptyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA4A5F3280D2A7400D5A45D /* EmptyViewController.swift */; };
+		CEC33B73280E86BF005AD47F /* YumemiWeather in Frameworks */ = {isa = PBXBuildFile; productRef = CEC33B72280E86BF005AD47F /* YumemiWeather */; };
+		CEC33B76280E86DD005AD47F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CEC33B75280E86DD005AD47F /* SnapKit */; };
 		CEC4851A2803B50C0093698E /* WeatherError+Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC485192803B50C0093698E /* WeatherError+Localized.swift */; };
 		CEC4851C2803B5410093698E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEC4851B2803B5410093698E /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		CE9DA70C280E3CB700DA8F9C /* PBXContainerItemProxy */ = {
+		CE74CA23280E844B00EFAA4D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CE0E248127FE74BE00EDC258 /* Project object */;
 			proxyType = 1;
@@ -45,10 +45,10 @@
 		CE0E249A27FE74BF00EDC258 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE0E24A827FE8CD200EDC258 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		CE6289552806B7E000518268 /* WeatherRequest+Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeatherRequest+Client.swift"; sourceTree = "<group>"; };
-		CE9DA708280E3CB700DA8F9C /* WeatherViewControllerTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherViewControllerTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE9DA70A280E3CB700DA8F9C /* WeatherViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewControllerTest.swift; sourceTree = "<group>"; };
-		CE9DA711280E3D3200DA8F9C /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
-		CE9DA713280E3FFE00DA8F9C /* WeatherCodableTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCodableTest.swift; sourceTree = "<group>"; };
+		CE74CA05280E822500EFAA4D /* WeatherModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
+		CE74CA1F280E844B00EFAA4D /* WeatherTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE74CA28280E846A00EFAA4D /* WeatherViewControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherViewControllerTest.swift; sourceTree = "<group>"; };
+		CE74CA29280E846A00EFAA4D /* WeatherCodableTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherCodableTest.swift; sourceTree = "<group>"; };
 		CEA4A5F1280D02FB00D5A45D /* WeatherIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherIconView.swift; sourceTree = "<group>"; };
 		CEA4A5F3280D2A7400D5A45D /* EmptyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyViewController.swift; sourceTree = "<group>"; };
 		CEC485192803B50C0093698E /* WeatherError+Localized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeatherError+Localized.swift"; sourceTree = "<group>"; };
@@ -60,12 +60,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE0E24A227FE79EC00EDC258 /* YumemiWeather in Frameworks */,
-				CE0E24A527FE7C4E00EDC258 /* SnapKit in Frameworks */,
+				CEC33B73280E86BF005AD47F /* YumemiWeather in Frameworks */,
+				CEC33B76280E86DD005AD47F /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CE9DA705280E3CB700DA8F9C /* Frameworks */ = {
+		CE74CA1C280E844B00EFAA4D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -79,7 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				CE0E248B27FE74BE00EDC258 /* yumemi-ios-training */,
-				CE9DA709280E3CB700DA8F9C /* WeatherViewControllerTest */,
+				CE74CA20280E844B00EFAA4D /* WeatherTest */,
 				CE0E248A27FE74BE00EDC258 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -88,7 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				CE0E248927FE74BE00EDC258 /* yumemi-ios-training.app */,
-				CE9DA708280E3CB700DA8F9C /* WeatherViewControllerTest.xctest */,
+				CE74CA1F280E844B00EFAA4D /* WeatherTest.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -107,21 +107,21 @@
 			path = "yumemi-ios-training";
 			sourceTree = "<group>";
 		};
-		CE9DA709280E3CB700DA8F9C /* WeatherViewControllerTest */ = {
+		CE74CA20280E844B00EFAA4D /* WeatherTest */ = {
 			isa = PBXGroup;
 			children = (
-				CE9DA70A280E3CB700DA8F9C /* WeatherViewControllerTest.swift */,
-				CE9DA713280E3FFE00DA8F9C /* WeatherCodableTest.swift */,
+				CE74CA29280E846A00EFAA4D /* WeatherCodableTest.swift */,
+				CE74CA28280E846A00EFAA4D /* WeatherViewControllerTest.swift */,
 			);
-			path = WeatherViewControllerTest;
+			path = WeatherTest;
 			sourceTree = "<group>";
 		};
 		CEA4A5EE280D00FD00D5A45D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CE74CA05280E822500EFAA4D /* WeatherModel.swift */,
 				CE0E24A827FE8CD200EDC258 /* Weather.swift */,
 				CEC485192803B50C0093698E /* WeatherError+Localized.swift */,
-				CE9DA711280E3D3200DA8F9C /* WeatherModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -163,29 +163,29 @@
 			);
 			name = "yumemi-ios-training";
 			packageProductDependencies = (
-				CE0E24A127FE79EC00EDC258 /* YumemiWeather */,
-				CE0E24A427FE7C4E00EDC258 /* SnapKit */,
+				CEC33B72280E86BF005AD47F /* YumemiWeather */,
+				CEC33B75280E86DD005AD47F /* SnapKit */,
 			);
 			productName = "yumemi-ios-training";
 			productReference = CE0E248927FE74BE00EDC258 /* yumemi-ios-training.app */;
 			productType = "com.apple.product-type.application";
 		};
-		CE9DA707280E3CB700DA8F9C /* WeatherViewControllerTest */ = {
+		CE74CA1E280E844B00EFAA4D /* WeatherTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CE9DA710280E3CB700DA8F9C /* Build configuration list for PBXNativeTarget "WeatherViewControllerTest" */;
+			buildConfigurationList = CE74CA25280E844B00EFAA4D /* Build configuration list for PBXNativeTarget "WeatherTest" */;
 			buildPhases = (
-				CE9DA704280E3CB700DA8F9C /* Sources */,
-				CE9DA705280E3CB700DA8F9C /* Frameworks */,
-				CE9DA706280E3CB700DA8F9C /* Resources */,
+				CE74CA1B280E844B00EFAA4D /* Sources */,
+				CE74CA1C280E844B00EFAA4D /* Frameworks */,
+				CE74CA1D280E844B00EFAA4D /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				CE9DA70D280E3CB700DA8F9C /* PBXTargetDependency */,
+				CE74CA24280E844B00EFAA4D /* PBXTargetDependency */,
 			);
-			name = WeatherViewControllerTest;
-			productName = WeatherViewControllerTest;
-			productReference = CE9DA708280E3CB700DA8F9C /* WeatherViewControllerTest.xctest */;
+			name = WeatherTest;
+			productName = WeatherTest;
+			productReference = CE74CA1F280E844B00EFAA4D /* WeatherTest.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -195,14 +195,15 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1330;
+				LastSwiftUpdateCheck = 1320;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
 					CE0E248827FE74BE00EDC258 = {
 						CreatedOnToolsVersion = 13.2.1;
 					};
-					CE9DA707280E3CB700DA8F9C = {
-						CreatedOnToolsVersion = 13.3.1;
+					CE74CA1E280E844B00EFAA4D = {
+						CreatedOnToolsVersion = 13.2.1;
+						LastSwiftMigration = 1320;
 						TestTargetID = CE0E248827FE74BE00EDC258;
 					};
 				};
@@ -217,15 +218,15 @@
 			);
 			mainGroup = CE0E248027FE74BE00EDC258;
 			packageReferences = (
-				CE0E24A027FE79EC00EDC258 /* XCRemoteSwiftPackageReference "ios-training" */,
-				CE0E24A327FE7C4E00EDC258 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				CEC33B71280E86BF005AD47F /* XCRemoteSwiftPackageReference "ios-training" */,
+				CEC33B74280E86DD005AD47F /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = CE0E248A27FE74BE00EDC258 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				CE0E248827FE74BE00EDC258 /* yumemi-ios-training */,
-				CE9DA707280E3CB700DA8F9C /* WeatherViewControllerTest */,
+				CE74CA1E280E844B00EFAA4D /* WeatherTest */,
 			);
 		};
 /* End PBXProject section */
@@ -241,7 +242,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CE9DA706280E3CB700DA8F9C /* Resources */ = {
+		CE74CA1D280E844B00EFAA4D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -256,10 +257,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEA4A5F2280D02FB00D5A45D /* WeatherIconView.swift in Sources */,
-				CE9DA712280E3D3200DA8F9C /* WeatherModel.swift in Sources */,
 				CE0E249127FE74BE00EDC258 /* WeatherViewController.swift in Sources */,
 				CEA4A5F4280D2A7400D5A45D /* EmptyViewController.swift in Sources */,
 				CE0E248D27FE74BE00EDC258 /* AppDelegate.swift in Sources */,
+				CE74CA06280E822500EFAA4D /* WeatherModel.swift in Sources */,
 				CEC4851A2803B50C0093698E /* WeatherError+Localized.swift in Sources */,
 				CE0E248F27FE74BE00EDC258 /* SceneDelegate.swift in Sources */,
 				CE0E24A927FE8CD200EDC258 /* Weather.swift in Sources */,
@@ -267,22 +268,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CE9DA704280E3CB700DA8F9C /* Sources */ = {
+		CE74CA1B280E844B00EFAA4D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE9DA70B280E3CB700DA8F9C /* WeatherViewControllerTest.swift in Sources */,
-				CE9DA714280E3FFE00DA8F9C /* WeatherCodableTest.swift in Sources */,
+				CE74CA2A280E846A00EFAA4D /* WeatherViewControllerTest.swift in Sources */,
+				CE74CA2B280E846A00EFAA4D /* WeatherCodableTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		CE9DA70D280E3CB700DA8F9C /* PBXTargetDependency */ = {
+		CE74CA24280E844B00EFAA4D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CE0E248827FE74BE00EDC258 /* yumemi-ios-training */;
-			targetProxy = CE9DA70C280E3CB700DA8F9C /* PBXContainerItemProxy */;
+			targetProxy = CE74CA23280E844B00EFAA4D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -468,36 +469,47 @@
 			};
 			name = Release;
 		};
-		CE9DA70E280E3CB700DA8F9C /* Debug */ = {
+		CE74CA26280E844B00EFAA4D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HVL7839YB5;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ribilynn.WeatherViewControllerTest;
+				PRODUCT_BUNDLE_IDENTIFIER = ribilynn.WeatherTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/yumemi-ios-training.app/yumemi-ios-training";
 			};
 			name = Debug;
 		};
-		CE9DA70F280E3CB700DA8F9C /* Release */ = {
+		CE74CA27280E844B00EFAA4D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HVL7839YB5;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ribilynn.WeatherViewControllerTest;
+				PRODUCT_BUNDLE_IDENTIFIER = ribilynn.WeatherTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -527,11 +539,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CE9DA710280E3CB700DA8F9C /* Build configuration list for PBXNativeTarget "WeatherViewControllerTest" */ = {
+		CE74CA25280E844B00EFAA4D /* Build configuration list for PBXNativeTarget "WeatherTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				CE9DA70E280E3CB700DA8F9C /* Debug */,
-				CE9DA70F280E3CB700DA8F9C /* Release */,
+				CE74CA26280E844B00EFAA4D /* Debug */,
+				CE74CA27280E844B00EFAA4D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -539,7 +551,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		CE0E24A027FE79EC00EDC258 /* XCRemoteSwiftPackageReference "ios-training" */ = {
+		CEC33B71280E86BF005AD47F /* XCRemoteSwiftPackageReference "ios-training" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/yumemi-inc/ios-training.git";
 			requirement = {
@@ -547,25 +559,25 @@
 				kind = branch;
 			};
 		};
-		CE0E24A327FE7C4E00EDC258 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+		CEC33B74280E86DD005AD47F /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
+				minimumVersion = 5.0.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		CE0E24A127FE79EC00EDC258 /* YumemiWeather */ = {
+		CEC33B72280E86BF005AD47F /* YumemiWeather */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CE0E24A027FE79EC00EDC258 /* XCRemoteSwiftPackageReference "ios-training" */;
+			package = CEC33B71280E86BF005AD47F /* XCRemoteSwiftPackageReference "ios-training" */;
 			productName = YumemiWeather;
 		};
-		CE0E24A427FE7C4E00EDC258 /* SnapKit */ = {
+		CEC33B75280E86DD005AD47F /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CE0E24A327FE7C4E00EDC258 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			package = CEC33B74280E86DD005AD47F /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
