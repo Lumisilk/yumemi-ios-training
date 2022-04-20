@@ -109,7 +109,7 @@ class WeatherViewController: UIViewController {
     }
     
     private func setViewsProperties() {
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         
         minTemperatureLabel.text = "--"
         minTemperatureLabel.textColor = .systemBlue
@@ -121,6 +121,7 @@ class WeatherViewController: UIViewController {
         maxTemperatureLabel.font = .preferredFont(forTextStyle: .title1)
         
         dateLabel.text = "--"
+        dateLabel.textColor = .label
         dateLabel.textAlignment = .center
         
         closeButton.setTitle(NSLocalizedString("Close", comment: ""), for: .normal)
