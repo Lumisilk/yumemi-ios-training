@@ -137,17 +137,17 @@ class WeatherViewController: UIViewController {
     
     @objc func reloadWeather() {
         activityView.startAnimating()
-        DispatchQueue.global().async {
+        DispatchQueue.global().async { [weatherModel, weak self] in
             do {
-                let weather = try self.weatherModel.fetchWeather(area: "Tokyo", date: Date())
+                let weather = try weatherModel.fetchWeather(area: "Tokyo", date: Date())
                 DispatchQueue.main.async {
-                    self.showWeather(weather)
-                    self.activityView.stopAnimating()
+                    self?.showWeather(weather)
+                    self?.activityView.stopAnimating()
                 }
             } catch {
                 DispatchQueue.main.async {
-                    self.presentError(error, showErrorDetail: false)
-                    self.activityView.stopAnimating()
+                    self?.presentError(error, showErrorDetail: false)
+                    self?.activityView.stopAnimating()
                 }
             }
         }
