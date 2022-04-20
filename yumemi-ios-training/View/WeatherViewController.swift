@@ -29,6 +29,8 @@ class WeatherViewController: UIViewController {
         return formatter
     }()
     
+    let activityView = UIActivityIndicatorView()
+    
     var weatherModel: WeatherModel
     
     init(weatherModel: WeatherModel) {
@@ -97,6 +99,13 @@ class WeatherViewController: UIViewController {
             make.centerX.equalToSuperview()
             make.bottom.equalTo(infoContainerLayoutGuide.snp.top).offset(-40)
         }
+        
+        view.addSubview(activityView)
+        activityView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(infoContainerLayoutGuide.snp.bottom)
+            make.bottom.equalTo(closeButton.snp.top)
+        }
     }
     
     private func setViewsProperties() {
@@ -132,6 +141,16 @@ class WeatherViewController: UIViewController {
             showWeather(weather)
         } catch {
             presentError(error, showErrorDetail: false)
+        }
+    }
+    
+    private func setLoadingState(isLoading: Bool) {
+        if isLoading {
+            activityView.startAnimating()
+            reloadButton.isEnabled = false
+        } else {
+            activityView.stopAnimating()
+            reloadButton.isEnabled = true
         }
     }
     
