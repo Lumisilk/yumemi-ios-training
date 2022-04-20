@@ -14,7 +14,7 @@ final class WeatherClient: WeatherModel {
         guard let requestString = String(data: requestData, encoding: .utf8) else {
             throw YumemiWeatherError.unknownError
         }
-        let reponseString = try YumemiWeather.fetchWeather(requestString)
+        let reponseString = try YumemiWeather.syncFetchWeather(requestString)
         guard let reponseData = reponseString.data(using: .utf8) else {
             throw YumemiWeatherError.unknownError
         }

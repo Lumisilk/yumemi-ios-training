@@ -29,6 +29,8 @@ class WeatherViewController: UIViewController {
         return formatter
     }()
     
+    let activityView = UIActivityIndicatorView()
+    
     var weatherModel: WeatherModel
     
     init(weatherModel: WeatherModel) {
@@ -97,6 +99,13 @@ class WeatherViewController: UIViewController {
             make.centerX.equalToSuperview()
             make.bottom.equalTo(infoContainerLayoutGuide.snp.top).offset(-40)
         }
+        
+        view.addSubview(activityView)
+        activityView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(infoContainerLayoutGuide.snp.bottom)
+            make.bottom.equalTo(closeButton.snp.top)
+        }
     }
     
     private func setViewsProperties() {
@@ -127,11 +136,20 @@ class WeatherViewController: UIViewController {
     }
     
     @objc func reloadWeather() {
-        do {
-            let weather = try weatherModel.fetchWeather(area: "Tokyo", date: Date())
-            showWeather(weather)
-        } catch {
-            presentError(error, showErrorDetail: false)
+        activityView.startAnimating()
+        DispatchQueue.global().async {
+            do {
+                let weather = try self.weatherModel.fetchWeather(area: "Tokyo", date: Date())
+                DispatchQueue.main.async {
+                    self.showWeather(weather)
+                    self.activityView.stopAnimating()
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    self.presentError(error, showErrorDetail: false)
+                    self.activityView.stopAnimating()
+                }
+            }
         }
     }
     
