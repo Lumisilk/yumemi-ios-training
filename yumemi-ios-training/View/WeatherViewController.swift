@@ -137,20 +137,28 @@ class WeatherViewController: UIViewController {
     }
     
     @objc func reloadWeather() {
-        activityView.startAnimating()
+        setLoadingState(isLoading: true)
         DispatchQueue.global().async { [weatherModel, weak self] in
-            do {
-                let weather = try weatherModel.fetchWeather(area: "Tokyo", date: Date())
-                DispatchQueue.main.async {
+            let weatherResult = weatherModel.fetchWeather(area: "Tokyo", date: Date())
+            DispatchQueue.main.async {
+                switch weatherResult {
+                case .success(let weather):
                     self?.showWeather(weather)
-                    self?.activityView.stopAnimating()
-                }
-            } catch {
-                DispatchQueue.main.async {
+                case .failure(let error):
                     self?.presentError(error, showErrorDetail: false)
-                    self?.activityView.stopAnimating()
                 }
+                self?.setLoadingState(isLoading: false)
             }
+        }
+    }
+    
+    private func setLoadingState(isLoading: Bool) {
+        if isLoading {
+            activityView.startAnimating()
+            reloadButton.isEnabled = false
+        } else {
+            activityView.stopAnimating()
+            reloadButton.isEnabled = true
         }
     }
     

@@ -8,5 +8,5 @@
 import Foundation
 
 protocol WeatherModel {
-    func fetchWeather(area: String, date: Date) throws -> Weather
+    func fetchWeather(area: String, date: Date) -> Result<Weather, Error>
 }

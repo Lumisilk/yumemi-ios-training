@@ -9,11 +9,14 @@ import XCTest
 @testable import yumemi_ios_training
 
 struct MockWeatherModel: WeatherModel {
-    
     var onFetchWeather: (String, Date) throws -> Weather
     
-    func fetchWeather(area: String, date: Date) throws -> Weather {
-        try onFetchWeather(area, date)
+    func fetchWeather(area: String, date: Date) -> Result<Weather, Error> {
+        do {
+            return .success(try onFetchWeather(area, date))
+        } catch {
+            return .failure(error)
+        }
     }
 }
 
