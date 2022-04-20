@@ -100,7 +100,7 @@ class WeatherViewController: UIViewController {
     }
     
     private func setViewsProperties() {
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         
         minTemperatureLabel.text = "--"
         minTemperatureLabel.textColor = .systemBlue
