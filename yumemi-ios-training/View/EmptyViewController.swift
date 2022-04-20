@@ -11,7 +11,7 @@ final class EmptyViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let weatherViewController = WeatherViewController()
+        let weatherViewController = WeatherViewController(weatherModel: WeatherClient())
         weatherViewController.modalPresentationStyle = .fullScreen
         present(weatherViewController, animated: true, completion: nil)
     }

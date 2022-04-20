@@ -1,14 +1,14 @@
 import Foundation
 import YumemiWeather
 
-struct WeatherRequest: Encodable {
+struct WeatherRequest: Codable, Equatable {
     let area: String
     let date: Date
 }
 
-final class WeatherClient {
+final class WeatherClient: WeatherModel {
     
-    func fetchWeather(area: String, date: Date = Date()) throws -> Weather {
+    func fetchWeather(area: String, date: Date) throws -> Weather {
         let request = WeatherRequest(area: area, date: date)
         let requestData = try WeatherClient.encoder.encode(request)
         guard let requestString = String(data: requestData, encoding: .utf8) else {
@@ -31,7 +31,6 @@ extension WeatherClient {
     
     static let encoder: JSONEncoder = {
         let encoder = JSONEncoder()
-        encoder.keyEncodingStrategy = .convertToSnakeCase
         encoder.dateEncodingStrategy = .iso8601
         return encoder
     }()

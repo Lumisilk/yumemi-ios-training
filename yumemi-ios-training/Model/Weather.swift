@@ -1,6 +1,6 @@
 import Foundation
 
-struct Weather: Decodable {
+struct Weather: Codable, Equatable {
     let name: String
     let maxTemperature: Int
     let minTemperature: Int
