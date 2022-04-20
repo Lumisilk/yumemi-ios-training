@@ -160,6 +160,16 @@ class WeatherViewController: UIViewController {
         }
     }
     
+    private func setLoadingState(isLoading: Bool) {
+        if isLoading {
+            activityView.startAnimating()
+            reloadButton.isEnabled = false
+        } else {
+            activityView.stopAnimating()
+            reloadButton.isEnabled = true
+        }
+    }
+    
     private func showWeather(_ weather: Weather) {
         minTemperatureLabel.text = String(weather.minTemperature)
         maxTemperatureLabel.text = String(weather.maxTemperature)
