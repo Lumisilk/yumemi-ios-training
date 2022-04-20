@@ -5,7 +5,6 @@
 //  Created by Zhou Chang on 2022/04/07.
 //
 
-import Combine
 import UIKit
 import SnapKit
 
@@ -32,19 +31,11 @@ class WeatherViewController: UIViewController {
     
     let activityView = UIActivityIndicatorView()
     
-    var weatherModel: WeatherModel
-    private var loadingStateCancellable: AnyCancellable?
-    private var reloadingWeatherCancellable: AnyCancellable?
+    private var weatherModel: WeatherModel
     
     init(weatherModel: WeatherModel) {
         self.weatherModel = weatherModel
         super.init(nibName: nil, bundle: nil)
-        
-        loadingStateCancellable = weatherModel.isLoading
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] isLoading in
-                self?.setLoadingState(isLoading: isLoading)
-            }
     }
     
     required init?(coder: NSCoder) {
@@ -145,18 +136,18 @@ class WeatherViewController: UIViewController {
     }
     
     @objc func reloadWeather() {
-        reloadingWeatherCancellable = weatherModel.fetchWeather(area: "Tokyo", date: Date())
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] completion in
-                switch completion {
+        setLoadingState(isLoading: true)
+        weatherModel.requestWeather(area: "Tokyo", date: Date()) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
                 case .failure(let error):
                     self?.presentError(error, showErrorDetail: false)
-                case .finished:
-                    break
+                case .success(let weather):
+                    self?.showWeather(weather)
                 }
-            } receiveValue: { [weak self] weather in
-                self?.showWeather(weather)
+                self?.setLoadingState(isLoading: false)
             }
+        }
     }
     
     private func setLoadingState(isLoading: Bool) {

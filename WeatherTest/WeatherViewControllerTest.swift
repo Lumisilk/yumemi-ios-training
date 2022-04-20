@@ -12,17 +12,13 @@ import XCTest
 struct MockWeatherModel: WeatherModel {
     
     var onFetchWeather: (String, Date) throws -> Weather
-    var isLoading = CurrentValueSubject<Bool, Never>(false)
     
-    func fetchWeather(area: String, date: Date) -> AnyPublisher<Weather, Error> {
-        isLoading.send(true)
-        return Future<Weather, Error> { promise in
-            do {
-                promise(.success(try onFetchWeather(area, date)))
-            } catch {
-                promise(.failure(error))
-            }
-        }.eraseToAnyPublisher()
+    func requestWeather(area: String, date: Date, completion: @escaping (Result<Weather, Error>) -> Void) {
+        do {
+            completion(.success(try onFetchWeather(area, date)))
+        } catch {
+            completion(.failure(error))
+        }
     }
 }
 
