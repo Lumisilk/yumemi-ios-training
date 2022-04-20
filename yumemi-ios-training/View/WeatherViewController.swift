@@ -5,6 +5,7 @@
 //  Created by Zhou Chang on 2022/04/07.
 //
 
+import Combine
 import UIKit
 import SnapKit
 
@@ -32,10 +33,18 @@ class WeatherViewController: UIViewController {
     let activityView = UIActivityIndicatorView()
     
     var weatherModel: WeatherModel
+    private var loadingStateCancellable: AnyCancellable?
+    private var reloadingWeatherCancellable: AnyCancellable?
     
     init(weatherModel: WeatherModel) {
         self.weatherModel = weatherModel
         super.init(nibName: nil, bundle: nil)
+        
+        loadingStateCancellable = weatherModel.isLoading
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isLoading in
+                self?.setLoadingState(isLoading: isLoading)
+            }
     }
     
     required init?(coder: NSCoder) {
@@ -121,7 +130,6 @@ class WeatherViewController: UIViewController {
         maxTemperatureLabel.font = .preferredFont(forTextStyle: .title1)
         
         dateLabel.text = "--"
-        dateLabel.textColor = .label
         dateLabel.textAlignment = .center
         
         closeButton.setTitle(NSLocalizedString("Close", comment: ""), for: .normal)
@@ -137,19 +145,18 @@ class WeatherViewController: UIViewController {
     }
     
     @objc func reloadWeather() {
-        setLoadingState(isLoading: true)
-        DispatchQueue.global().async { [weatherModel, weak self] in
-            let weatherResult = weatherModel.fetchWeather(area: "Tokyo", date: Date())
-            DispatchQueue.main.async {
-                switch weatherResult {
-                case .success(let weather):
-                    self?.showWeather(weather)
+        reloadingWeatherCancellable = weatherModel.fetchWeather(area: "Tokyo", date: Date())
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] completion in
+                switch completion {
                 case .failure(let error):
                     self?.presentError(error, showErrorDetail: false)
+                case .finished:
+                    break
                 }
-                self?.setLoadingState(isLoading: false)
+            } receiveValue: { [weak self] weather in
+                self?.showWeather(weather)
             }
-        }
     }
     
     private func setLoadingState(isLoading: Bool) {

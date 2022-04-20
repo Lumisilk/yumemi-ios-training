@@ -6,7 +6,9 @@
 //
 
 import Foundation
+import Combine
 
 protocol WeatherModel {
-    func fetchWeather(area: String, date: Date) -> Result<Weather, Error>
+    var isLoading: CurrentValueSubject<Bool, Never> { get }
+    func fetchWeather(area: String, date: Date) -> AnyPublisher<Weather, Error>
 }

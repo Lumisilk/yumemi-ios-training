@@ -5,18 +5,24 @@
 //  Created by Zhou Chang on 2022/04/19.
 //
 
+import Combine
 import XCTest
 @testable import yumemi_ios_training
 
 struct MockWeatherModel: WeatherModel {
-    var onFetchWeather: (String, Date) throws -> Weather
     
-    func fetchWeather(area: String, date: Date) -> Result<Weather, Error> {
-        do {
-            return .success(try onFetchWeather(area, date))
-        } catch {
-            return .failure(error)
-        }
+    var onFetchWeather: (String, Date) throws -> Weather
+    var isLoading = CurrentValueSubject<Bool, Never>(false)
+    
+    func fetchWeather(area: String, date: Date) -> AnyPublisher<Weather, Error> {
+        isLoading.send(true)
+        return Future<Weather, Error> { promise in
+            do {
+                promise(.success(try onFetchWeather(area, date)))
+            } catch {
+                promise(.failure(error))
+            }
+        }.eraseToAnyPublisher()
     }
 }
 
