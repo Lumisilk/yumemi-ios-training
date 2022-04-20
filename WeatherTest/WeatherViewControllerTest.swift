@@ -20,11 +20,18 @@ struct MockWeatherModel: WeatherModel {
 class WeatherViewControllerTest: XCTestCase {
 
     func testSunnyIcon() throws {
+        let expectation = self.expectation(description: "WeatherLoading")
         let weatherModel = MockWeatherModel { _, date in
-            Weather(name: "sunny", maxTemperature: 28, minTemperature: 1, date: date)
+            defer {
+                DispatchQueue.main.async {
+                    expectation.fulfill()
+                }
+            }
+            return Weather(name: "sunny", maxTemperature: 28, minTemperature: 1, date: date)
         }
         let viewController = WeatherViewController(weatherModel: weatherModel)
         viewController.reloadWeather()
+        wait(for: [expectation], timeout: 5)
         
         let renderedImageData = viewController.weatherIconView.image?.pngData()
         let expectedImageData = UIImage(named: "icon-sunny")?.pngData()
@@ -35,11 +42,18 @@ class WeatherViewControllerTest: XCTestCase {
     }
     
     func testRainyIcon() throws {
+        let expectation = self.expectation(description: "WeatherLoading")
         let weatherModel = MockWeatherModel { _, date in
-            Weather(name: "rainy", maxTemperature: 28, minTemperature: 1, date: date)
+            defer {
+                DispatchQueue.main.async {
+                    expectation.fulfill()
+                }
+            }
+            return Weather(name: "rainy", maxTemperature: 28, minTemperature: 1, date: date)
         }
         let viewController = WeatherViewController(weatherModel: weatherModel)
         viewController.reloadWeather()
+        wait(for: [expectation], timeout: 5)
         
         let renderedImageData = viewController.weatherIconView.image?.pngData()
         let expectedImageData = UIImage(named: "icon-rainy")?.pngData()
@@ -50,11 +64,18 @@ class WeatherViewControllerTest: XCTestCase {
     }
     
     func testCloudyIcon() throws {
+        let expectation = self.expectation(description: "WeatherLoading")
         let weatherModel = MockWeatherModel { _, date in
-            Weather(name: "cloudy", maxTemperature: 28, minTemperature: 1, date: date)
+            defer {
+                DispatchQueue.main.async {
+                    expectation.fulfill()
+                }
+            }
+            return Weather(name: "cloudy", maxTemperature: 28, minTemperature: 1, date: date)
         }
         let viewController = WeatherViewController(weatherModel: weatherModel)
         viewController.reloadWeather()
+        wait(for: [expectation], timeout: 5)
         
         let renderedImageData = viewController.weatherIconView.image?.pngData()
         let expectedImageData = UIImage(named: "icon-cloudy")?.pngData()
@@ -65,11 +86,18 @@ class WeatherViewControllerTest: XCTestCase {
     }
     
     func testTemperatureLabel() throws {
+        let expectation = self.expectation(description: "WeatherLoading")
         let weatherModel = MockWeatherModel { _, date in
-            Weather(name: "rainy", maxTemperature: 514, minTemperature: -114, date: date)
+            defer {
+                DispatchQueue.main.async {
+                    expectation.fulfill()
+                }
+            }
+            return Weather(name: "rainy", maxTemperature: 514, minTemperature: -114, date: date)
         }
         let viewController = WeatherViewController(weatherModel: weatherModel)
         viewController.reloadWeather()
+        wait(for: [expectation], timeout: 5)
         
         XCTAssertEqual(viewController.minTemperatureLabel.text, "-114")
         XCTAssertEqual(viewController.maxTemperatureLabel.text, "514")
