@@ -5,6 +5,7 @@
 //  Created by Zhou Chang on 2022/04/07.
 //
 
+import Combine
 import UIKit
 import SnapKit
 
@@ -32,10 +33,17 @@ class WeatherViewController: UIViewController {
     let activityView = UIActivityIndicatorView()
     
     private var weatherModel: WeatherModel
+    private var loadingStateSubscription: AnyCancellable?
     
     init(weatherModel: WeatherModel) {
         self.weatherModel = weatherModel
         super.init(nibName: nil, bundle: nil)
+        
+        loadingStateSubscription = self.weatherModel.isLoading
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.setLoadingState(isLoading: $0)
+            }
     }
     
     required init?(coder: NSCoder) {
@@ -136,7 +144,6 @@ class WeatherViewController: UIViewController {
     }
     
     @objc func reloadWeather() {
-        setLoadingState(isLoading: true)
         weatherModel.requestWeather(area: "Tokyo", date: Date()) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
@@ -145,18 +152,7 @@ class WeatherViewController: UIViewController {
                 case .success(let weather):
                     self?.showWeather(weather)
                 }
-                self?.setLoadingState(isLoading: false)
             }
-        }
-    }
-    
-    private func setLoadingState(isLoading: Bool) {
-        if isLoading {
-            activityView.startAnimating()
-            reloadButton.isEnabled = false
-        } else {
-            activityView.stopAnimating()
-            reloadButton.isEnabled = true
         }
     }
     

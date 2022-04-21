@@ -11,6 +11,7 @@ import XCTest
 
 struct MockWeatherModel: WeatherModel {
     
+    var isLoading = CurrentValueSubject<Bool, Never>(false)
     var onFetchWeather: (String, Date) throws -> Weather
     
     func requestWeather(area: String, date: Date, completion: @escaping (Result<Weather, Error>) -> Void) {

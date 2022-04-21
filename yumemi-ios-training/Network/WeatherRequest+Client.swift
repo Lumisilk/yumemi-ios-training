@@ -8,8 +8,15 @@ struct WeatherRequest: Codable, Equatable {
 }
 
 final class WeatherClient: WeatherModel {
+    
+    var isLoading = CurrentValueSubject<Bool, Never>(false)
+    
     func requestWeather(area: String, date: Date, completion: @escaping (Result<Weather, Error>) -> Void) {
-        DispatchQueue.global().async {
+        isLoading.send(true)
+        DispatchQueue.global().async { [isLoading] in
+            defer {
+                isLoading.send(false)
+            }
             do {
                 let request = WeatherRequest(area: area, date: date)
                 let requestData = try WeatherClient.encoder.encode(request)
