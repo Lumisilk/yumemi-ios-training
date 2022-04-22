@@ -51,6 +51,10 @@ class WeatherViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print("WeatherViewConrtoller was deinited.")
+    }
+    
     override func viewDidLoad() {
         addSubviewsAndConstraints()
         setViewsProperties()
