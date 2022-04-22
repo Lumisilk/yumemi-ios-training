@@ -11,14 +11,15 @@ import XCTest
 
 struct MockWeatherModel: WeatherModel {
     
+    var delegate: WeatherModelDelegate?
     var isLoading = CurrentValueSubject<Bool, Never>(false)
     var onFetchWeather: (String, Date) throws -> Weather
     
-    func requestWeather(area: String, date: Date, completion: @escaping (Result<Weather, Error>) -> Void) {
+    func requestWeather(area: String, date: Date) {
         do {
-            completion(.success(try onFetchWeather(area, date)))
+            delegate?.didReceiveWeather(result: .success(try onFetchWeather(area, date)))
         } catch {
-            completion(.failure(error))
+            delegate?.didReceiveWeather(result: .failure(error))
         }
     }
 }
