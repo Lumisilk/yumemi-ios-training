@@ -1,12 +1,14 @@
 //
-//  WeatherModel+Impl.swift
+//  WeatherModel.swift
 //  yumemi-ios-training
 //
 //  Created by Zhou Chang on 2022/04/19.
 //
 
+import Combine
 import Foundation
 
 protocol WeatherModel {
-    func fetchWeather(area: String, date: Date) throws -> Weather
+    var isLoading: CurrentValueSubject<Bool, Never> { get }
+    func requestWeather(area: String, date: Date, completion: @escaping (Result<Weather, Error>) -> Void)
 }

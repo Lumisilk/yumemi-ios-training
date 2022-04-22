@@ -5,6 +5,7 @@
 //  Created by Zhou Chang on 2022/04/07.
 //
 
+import Combine
 import UIKit
 import SnapKit
 
@@ -31,11 +32,18 @@ class WeatherViewController: UIViewController {
     
     let activityView = UIActivityIndicatorView()
     
-    var weatherModel: WeatherModel
+    private var weatherModel: WeatherModel
+    private var loadingStateSubscription: AnyCancellable?
     
     init(weatherModel: WeatherModel) {
         self.weatherModel = weatherModel
         super.init(nibName: nil, bundle: nil)
+        
+        loadingStateSubscription = self.weatherModel.isLoading
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.setLoadingState(isLoading: $0)
+            }
     }
     
     required init?(coder: NSCoder) {
@@ -136,11 +144,15 @@ class WeatherViewController: UIViewController {
     }
     
     @objc func reloadWeather() {
-        do {
-            let weather = try weatherModel.fetchWeather(area: "Tokyo", date: Date())
-            showWeather(weather)
-        } catch {
-            presentError(error, showErrorDetail: false)
+        weatherModel.requestWeather(area: "Tokyo", date: Date()) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .failure(let error):
+                    self?.presentError(error, showErrorDetail: false)
+                case .success(let weather):
+                    self?.showWeather(weather)
+                }
+            }
         }
     }
     
