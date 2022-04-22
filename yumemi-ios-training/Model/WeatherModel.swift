@@ -8,7 +8,12 @@
 import Combine
 import Foundation
 
+protocol WeatherModelDelegate: AnyObject {
+    func didReceiveWeather(result: Result<Weather, Error>)
+}
+
 protocol WeatherModel {
     var isLoading: CurrentValueSubject<Bool, Never> { get }
-    func requestWeather(area: String, date: Date, completion: @escaping (Result<Weather, Error>) -> Void)
+    var delegate: WeatherModelDelegate? { get set }
+    func requestWeather(area: String, date: Date)
 }

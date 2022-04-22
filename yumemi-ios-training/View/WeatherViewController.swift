@@ -38,6 +38,7 @@ class WeatherViewController: UIViewController {
     init(weatherModel: WeatherModel) {
         self.weatherModel = weatherModel
         super.init(nibName: nil, bundle: nil)
+        self.weatherModel.delegate = self
         
         loadingStateSubscription = self.weatherModel.isLoading
             .receive(on: DispatchQueue.main)
@@ -48,6 +49,10 @@ class WeatherViewController: UIViewController {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("WeatherViewConrtoller was deinited.")
     }
     
     override func viewDidLoad() {
@@ -144,16 +149,7 @@ class WeatherViewController: UIViewController {
     }
     
     @objc func reloadWeather() {
-        weatherModel.requestWeather(area: "Tokyo", date: Date()) { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .failure(let error):
-                    self?.presentError(error, showErrorDetail: false)
-                case .success(let weather):
-                    self?.showWeather(weather)
-                }
-            }
-        }
+        weatherModel.requestWeather(area: "Tokyo", date: Date())
     }
     
     private func setLoadingState(isLoading: Bool) {
@@ -188,5 +184,18 @@ class WeatherViewController: UIViewController {
             )
         )
         present(alertController, animated: true, completion: nil)
+    }
+}
+
+extension WeatherViewController: WeatherModelDelegate {
+    func didReceiveWeather(result: Result<Weather, Error>) {
+        DispatchQueue.main.async {
+            switch result {
+            case .failure(let error):
+                self.presentError(error, showErrorDetail: false)
+            case .success(let weather):
+                self.showWeather(weather)
+            }
+        }
     }
 }
