@@ -11,15 +11,16 @@ import XCTest
 
 struct MockWeatherModel: WeatherModel {
     
-    var delegate: WeatherModelDelegate?
     var isLoading = CurrentValueSubject<Bool, Never>(false)
     var onFetchWeather: (String, Date) throws -> Weather
     
-    func requestWeather(area: String, date: Date) {
-        do {
-            delegate?.didReceiveWeather(result: .success(try onFetchWeather(area, date)))
-        } catch {
-            delegate?.didReceiveWeather(result: .failure(error))
+    func requestWeather(area: String, date: Date) async throws -> Weather {
+        try await withCheckedThrowingContinuation { continuation in
+            do {
+                continuation.resume(with: .success(try onFetchWeather(area, date)))
+            } catch {
+                continuation.resume(with: .failure(error))
+            }
         }
     }
 }
@@ -30,9 +31,7 @@ class WeatherViewControllerTest: XCTestCase {
         let expectation = self.expectation(description: "WeatherLoading")
         let weatherModel = MockWeatherModel { _, date in
             defer {
-                DispatchQueue.main.async {
-                    expectation.fulfill()
-                }
+                expectation.fulfill()
             }
             return Weather(name: "sunny", maxTemperature: 28, minTemperature: 1, date: date)
         }
@@ -52,9 +51,7 @@ class WeatherViewControllerTest: XCTestCase {
         let expectation = self.expectation(description: "WeatherLoading")
         let weatherModel = MockWeatherModel { _, date in
             defer {
-                DispatchQueue.main.async {
-                    expectation.fulfill()
-                }
+                expectation.fulfill()
             }
             return Weather(name: "rainy", maxTemperature: 28, minTemperature: 1, date: date)
         }
@@ -74,9 +71,7 @@ class WeatherViewControllerTest: XCTestCase {
         let expectation = self.expectation(description: "WeatherLoading")
         let weatherModel = MockWeatherModel { _, date in
             defer {
-                DispatchQueue.main.async {
-                    expectation.fulfill()
-                }
+                expectation.fulfill()
             }
             return Weather(name: "cloudy", maxTemperature: 28, minTemperature: 1, date: date)
         }
@@ -96,9 +91,7 @@ class WeatherViewControllerTest: XCTestCase {
         let expectation = self.expectation(description: "WeatherLoading")
         let weatherModel = MockWeatherModel { _, date in
             defer {
-                DispatchQueue.main.async {
-                    expectation.fulfill()
-                }
+                expectation.fulfill()
             }
             return Weather(name: "rainy", maxTemperature: 514, minTemperature: -114, date: date)
         }
