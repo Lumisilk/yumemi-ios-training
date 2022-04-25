@@ -31,6 +31,7 @@ final class AreaWeatherListViewController: UITableViewController {
     init(viewModel: AreaWeatherListViewModelProtocol) {
         self.viewModel = viewModel
         super.init(style: .insetGrouped)
+        subscribe()
     }
     
     required init?(coder: NSCoder) {
@@ -41,8 +42,6 @@ final class AreaWeatherListViewController: UITableViewController {
         navigationItem.title = NSLocalizedString("Weathers", comment: "")
         configureTableview()
         configureRefreshControl()
-        subscribe()
-        
         viewModel.requestAreaWeather(areas: Area.allCases, date: Date())
     }
     

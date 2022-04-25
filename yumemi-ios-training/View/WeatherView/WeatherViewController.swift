@@ -47,6 +47,7 @@ final class WeatherViewController: UIViewController {
     init(weatherViewModel: WeatherViewModelProtocol) {
         self.viewModel = weatherViewModel
         super.init(nibName: nil, bundle: nil)
+        subscribe()
     }
     
     required init?(coder: NSCoder) {
@@ -56,7 +57,6 @@ final class WeatherViewController: UIViewController {
     override func viewDidLoad() {
         addSubviewsAndConstraints()
         setViewsProperties()
-        subscribe()
     }
     
     private func subscribe() {

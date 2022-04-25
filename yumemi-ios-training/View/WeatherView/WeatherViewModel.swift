@@ -28,7 +28,7 @@ class WeatherViewModel: WeatherViewModelProtocol {
         Task {
             isLoading.send(true)
             do {
-                self.weather.send(try await client.requestWeather(area: area.rawValue, date: date))
+                weather.send(try await client.requestWeather(area: area.rawValue, date: date))
             } catch {
                 self.error.send(error)
             }
