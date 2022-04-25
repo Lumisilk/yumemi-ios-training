@@ -8,33 +8,24 @@ struct WeatherRequest: Codable, Equatable {
 }
 
 final class WeatherClient: WeatherModel {
-    weak var delegate: WeatherModelDelegate?
+    
     var isLoading = CurrentValueSubject<Bool, Never>(false)
     
-    func requestWeather(area: String, date: Date) {
+    func requestWeather(area: String, date: Date) async throws -> Weather {
         isLoading.send(true)
-        DispatchQueue.global().async { [weak self] in
-            defer {
-                self?.isLoading.send(false)
-            }
-            do {
-                let request = WeatherRequest(area: area, date: date)
-                let requestData = try WeatherClient.encoder.encode(request)
-                guard let requestString = String(data: requestData, encoding: .utf8) else {
-                    self?.delegate?.didReceiveWeather(result: .failure(YumemiWeatherError.unknownError))
-                    return
-                }
-                let reponseString = try YumemiWeather.syncFetchWeather(requestString)
-                guard let reponseData = reponseString.data(using: .utf8) else {
-                    self?.delegate?.didReceiveWeather(result: .failure(YumemiWeatherError.unknownError))
-                    return
-                }
-                let weather = try WeatherClient.decoder.decode(Weather.self, from: reponseData)
-                self?.delegate?.didReceiveWeather(result: .success(weather))
-            } catch {
-                self?.delegate?.didReceiveWeather(result: .failure(error))
-            }
+        defer {
+            isLoading.send(false)
         }
+        let request = WeatherRequest(area: area, date: date)
+        let requestData = try WeatherClient.encoder.encode(request)
+        guard let requestString = String(data: requestData, encoding: .utf8) else {
+            throw YumemiWeatherError.unknownError
+        }
+        let reponseString = try await YumemiWeather.asyncFetchWeather(requestString)
+        guard let reponseData = reponseString.data(using: .utf8) else {
+            throw YumemiWeatherError.unknownError
+        }
+        return try WeatherClient.decoder.decode(Weather.self, from: reponseData)
     }
 }
 

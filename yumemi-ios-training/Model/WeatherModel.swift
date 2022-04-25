@@ -8,12 +8,7 @@
 import Combine
 import Foundation
 
-protocol WeatherModelDelegate: AnyObject {
-    func didReceiveWeather(result: Result<Weather, Error>)
-}
-
 protocol WeatherModel {
     var isLoading: CurrentValueSubject<Bool, Never> { get }
-    var delegate: WeatherModelDelegate? { get set }
-    func requestWeather(area: String, date: Date)
+    func requestWeather(area: String, date: Date) async throws -> Weather
 }

@@ -11,102 +11,81 @@ import XCTest
 
 struct MockWeatherModel: WeatherModel {
     
-    var delegate: WeatherModelDelegate?
     var isLoading = CurrentValueSubject<Bool, Never>(false)
     var onFetchWeather: (String, Date) throws -> Weather
     
-    func requestWeather(area: String, date: Date) {
-        do {
-            delegate?.didReceiveWeather(result: .success(try onFetchWeather(area, date)))
-        } catch {
-            delegate?.didReceiveWeather(result: .failure(error))
+    func requestWeather(area: String, date: Date) async throws -> Weather {
+        try await withCheckedThrowingContinuation { continuation in
+            do {
+                continuation.resume(with: .success(try onFetchWeather(area, date)))
+            } catch {
+                continuation.resume(with: .failure(error))
+            }
         }
     }
 }
 
 class WeatherViewControllerTest: XCTestCase {
-
-    func testSunnyIcon() throws {
-        let expectation = self.expectation(description: "WeatherLoading")
+    
+    func testSunnyIcon() async throws {
         let weatherModel = MockWeatherModel { _, date in
-            defer {
-                DispatchQueue.main.async {
-                    expectation.fulfill()
-                }
-            }
-            return Weather(name: "sunny", maxTemperature: 28, minTemperature: 1, date: date)
+            Weather(name: "sunny", maxTemperature: 28, minTemperature: 1, date: date)
         }
-        let viewController = WeatherViewController(weatherModel: weatherModel)
-        viewController.reloadWeather()
-        wait(for: [expectation], timeout: 5)
+        let viewController = await WeatherViewController(weatherModel: weatherModel)
+        await viewController.reloadWeather()
         
-        let renderedImageData = viewController.weatherIconView.image?.pngData()
+        let renderedImageData = await viewController.weatherIconView.image?.pngData()
         let expectedImageData = UIImage(named: "icon-sunny")?.pngData()
         XCTAssertNotNil(renderedImageData)
         XCTAssertNotNil(expectedImageData)
         XCTAssertEqual(renderedImageData, expectedImageData)
-        XCTAssertEqual(viewController.weatherIconView.tintColor, .systemRed)
+        let tintColor = await viewController.weatherIconView.tintColor
+        XCTAssertEqual(tintColor, .systemRed)
     }
     
-    func testRainyIcon() throws {
-        let expectation = self.expectation(description: "WeatherLoading")
+    func testRainyIcon() async throws {
         let weatherModel = MockWeatherModel { _, date in
-            defer {
-                DispatchQueue.main.async {
-                    expectation.fulfill()
-                }
-            }
-            return Weather(name: "rainy", maxTemperature: 28, minTemperature: 1, date: date)
+            Weather(name: "rainy", maxTemperature: 28, minTemperature: 1, date: date)
         }
-        let viewController = WeatherViewController(weatherModel: weatherModel)
-        viewController.reloadWeather()
-        wait(for: [expectation], timeout: 5)
+        let viewController = await WeatherViewController(weatherModel: weatherModel)
+        await viewController.reloadWeather()
         
-        let renderedImageData = viewController.weatherIconView.image?.pngData()
+        let renderedImageData = await viewController.weatherIconView.image?.pngData()
         let expectedImageData = UIImage(named: "icon-rainy")?.pngData()
         XCTAssertNotNil(renderedImageData)
         XCTAssertNotNil(expectedImageData)
         XCTAssertEqual(renderedImageData, expectedImageData)
-        XCTAssertEqual(viewController.weatherIconView.tintColor, .systemBlue)
+        let tintColor = await viewController.weatherIconView.tintColor
+        XCTAssertEqual(tintColor, .systemBlue)
     }
     
-    func testCloudyIcon() throws {
-        let expectation = self.expectation(description: "WeatherLoading")
+    func testCloudyIcon() async throws {
         let weatherModel = MockWeatherModel { _, date in
-            defer {
-                DispatchQueue.main.async {
-                    expectation.fulfill()
-                }
-            }
-            return Weather(name: "cloudy", maxTemperature: 28, minTemperature: 1, date: date)
+            Weather(name: "cloudy", maxTemperature: 28, minTemperature: 1, date: date)
         }
-        let viewController = WeatherViewController(weatherModel: weatherModel)
-        viewController.reloadWeather()
-        wait(for: [expectation], timeout: 5)
+        let viewController = await WeatherViewController(weatherModel: weatherModel)
+        await viewController.reloadWeather()
         
-        let renderedImageData = viewController.weatherIconView.image?.pngData()
+        let renderedImageData = await viewController.weatherIconView.image?.pngData()
         let expectedImageData = UIImage(named: "icon-cloudy")?.pngData()
         XCTAssertNotNil(renderedImageData)
         XCTAssertNotNil(expectedImageData)
         XCTAssertEqual(renderedImageData, expectedImageData)
-        XCTAssertEqual(viewController.weatherIconView.tintColor, .systemGray)
+        let tintColor = await viewController.weatherIconView.tintColor
+        XCTAssertEqual(tintColor, .systemGray)
     }
     
-    func testTemperatureLabel() throws {
-        let expectation = self.expectation(description: "WeatherLoading")
+    func testTemperatureLabel() async throws {
         let weatherModel = MockWeatherModel { _, date in
-            defer {
-                DispatchQueue.main.async {
-                    expectation.fulfill()
-                }
-            }
-            return Weather(name: "rainy", maxTemperature: 514, minTemperature: -114, date: date)
+            Weather(name: "rainy", maxTemperature: 514, minTemperature: -114, date: date)
         }
-        let viewController = WeatherViewController(weatherModel: weatherModel)
-        viewController.reloadWeather()
-        wait(for: [expectation], timeout: 5)
+        let viewController = await WeatherViewController(weatherModel: weatherModel)
+        await viewController.reloadWeather()
         
-        XCTAssertEqual(viewController.minTemperatureLabel.text, "-114")
-        XCTAssertEqual(viewController.maxTemperatureLabel.text, "514")
+        let minTemperatureLabelText = await viewController.minTemperatureLabel.text
+        let maxTemperatureLabelText = await viewController.maxTemperatureLabel.text
+        
+        XCTAssertEqual(minTemperatureLabelText, "-114")
+        XCTAssertEqual(maxTemperatureLabelText, "514")
     }
 }
