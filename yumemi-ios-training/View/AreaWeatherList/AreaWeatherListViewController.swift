@@ -19,11 +19,15 @@ protocol AreaWeatherListViewModelProtocol {
 
 final class AreaWeatherListViewController: UITableViewController {
     
+    // An message to notify user to pull down to refresh
+    private let emptyMessageLabel = UILabel()
+    
     private var viewModel: AreaWeatherListViewModelProtocol
     private var cancellables: [AnyCancellable] = []
     
     private var areaWeathers: [AreaWeather] = [] {
         didSet {
+            emptyMessageLabel.isHidden = !areaWeathers.isEmpty
             tableView.reloadData()
         }
     }
@@ -48,6 +52,12 @@ final class AreaWeatherListViewController: UITableViewController {
     private func configureTableview() {
         tableView.register(AreaWeatherListCell.self, forCellReuseIdentifier: AreaWeatherListCell.identifier)
         tableView.rowHeight = UITableView.automaticDimension
+        
+        emptyMessageLabel.text = NSLocalizedString("There is nothing. \nPull down to refresh!", comment: "")
+        emptyMessageLabel.textColor = .secondaryLabel
+        emptyMessageLabel.numberOfLines = 0
+        emptyMessageLabel.textAlignment = .center
+        tableView.backgroundView = emptyMessageLabel
     }
     
     func configureRefreshControl() {
