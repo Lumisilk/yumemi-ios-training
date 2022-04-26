@@ -1,10 +1,3 @@
-//
-//  SceneDelegate.swift
-//  yumemi-ios-training
-//
-//  Created by Zhou Chang on 2022/04/07.
-//
-
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -16,10 +9,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         let areaWeatherListViewController = AreaWeatherListViewController(viewModel: AreaWeatherListViewModel())
         let navigationController = UINavigationController(rootViewController: areaWeatherListViewController)
-//        navigationController.navigationBar.prefersLargeTitles = true
         window.rootViewController = navigationController
         self.window = window
         window.makeKeyAndVisible()
     }
 }
-

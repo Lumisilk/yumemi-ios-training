@@ -1,10 +1,3 @@
-//
-//  WeatherViewControllerTest.swift
-//  WeatherViewControllerTest
-//
-//  Created by Zhou Chang on 2022/04/19.
-//
-
 import Combine
 import XCTest
 import YumemiWeather

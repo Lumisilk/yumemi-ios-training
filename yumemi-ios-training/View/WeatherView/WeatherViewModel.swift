@@ -1,10 +1,3 @@
-//
-//  WeatherModel.swift
-//  yumemi-ios-training
-//
-//  Created by Zhou Chang on 2022/04/19.
-//
-
 import Combine
 import Foundation
 import YumemiWeather

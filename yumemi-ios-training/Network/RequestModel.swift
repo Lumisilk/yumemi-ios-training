@@ -1,10 +1,3 @@
-//
-//  RequestModel.swift
-//  yumemi-ios-training
-//
-//  Created by Zhou Chang on 2022/04/22.
-//
-
 import Foundation
 
 struct WeatherRequest: Codable, Equatable {

@@ -1,10 +1,3 @@
-//
-//  AreaWeatherListViewModel.swift
-//  yumemi-ios-training
-//
-//  Created by Zhou Chang on 2022/04/22.
-//
-
 import Combine
 import Foundation
 import YumemiWeather

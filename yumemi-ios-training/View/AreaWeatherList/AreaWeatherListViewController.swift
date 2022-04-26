@@ -1,10 +1,3 @@
-//
-//  AreaWeatherListViewController.swift
-//  yumemi-ios-training
-//
-//  Created by Zhou Chang on 2022/04/22.
-//
-
 import Combine
 import Foundation
 import UIKit
@@ -19,15 +12,15 @@ protocol AreaWeatherListViewModelProtocol {
 
 final class AreaWeatherListViewController: UITableViewController {
     
-    // An message to notify user to pull down to refresh
-    private let emptyMessageLabel = UILabel()
+    // An message underneath the tableview to notify user to pull down to refresh
+    let emptyDataMessageLabel = UILabel()
     
     private var viewModel: AreaWeatherListViewModelProtocol
     private var cancellables: [AnyCancellable] = []
     
     private var areaWeathers: [AreaWeather] = [] {
         didSet {
-            emptyMessageLabel.isHidden = !areaWeathers.isEmpty
+            emptyDataMessageLabel.isHidden = !areaWeathers.isEmpty
             tableView.reloadData()
         }
     }
@@ -53,16 +46,16 @@ final class AreaWeatherListViewController: UITableViewController {
         tableView.register(AreaWeatherListCell.self, forCellReuseIdentifier: AreaWeatherListCell.identifier)
         tableView.rowHeight = UITableView.automaticDimension
         
-        emptyMessageLabel.text = NSLocalizedString("There is nothing. \nPull down to refresh!", comment: "")
-        emptyMessageLabel.textColor = .secondaryLabel
-        emptyMessageLabel.numberOfLines = 0
-        emptyMessageLabel.textAlignment = .center
-        tableView.backgroundView = emptyMessageLabel
+        emptyDataMessageLabel.text = NSLocalizedString("There is nothing. \nPull down to refresh!", comment: "")
+        emptyDataMessageLabel.textColor = .secondaryLabel
+        emptyDataMessageLabel.numberOfLines = 0
+        emptyDataMessageLabel.textAlignment = .center
+        tableView.backgroundView = emptyDataMessageLabel
     }
     
     func configureRefreshControl() {
         refreshControl = UIRefreshControl()
-        refreshControl?.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
+        refreshControl?.addTarget(self, action: #selector(requestWeather), for: .valueChanged)
     }
     
     private func subscribe() {
@@ -88,7 +81,7 @@ final class AreaWeatherListViewController: UITableViewController {
             .store(in: &cancellables)
     }
     
-    @objc func handleRefreshControl() {
+    @objc private func requestWeather() {
         viewModel.requestAreaWeather(areas: Area.allCases, date: Date())
     }
     
@@ -117,7 +110,7 @@ final class AreaWeatherListViewController: UITableViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    // MARK: UITableView DataSource and Delegate
+    // MARK: - UITableView DataSource and Delegate
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         areaWeathers.count
     }

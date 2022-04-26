@@ -1,10 +1,3 @@
-//
-//  ViewController.swift
-//  yumemi-ios-training
-//
-//  Created by Zhou Chang on 2022/04/07.
-//
-
 import Combine
 import UIKit
 import SnapKit
