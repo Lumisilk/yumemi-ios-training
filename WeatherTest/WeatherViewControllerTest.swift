@@ -1,38 +1,40 @@
-//
-//  WeatherViewControllerTest.swift
-//  WeatherViewControllerTest
-//
-//  Created by Zhou Chang on 2022/04/19.
-//
-
 import Combine
 import XCTest
+import YumemiWeather
 @testable import yumemi_ios_training
 
-struct MockWeatherModel: WeatherModel {
+struct MockWeatherModel: WeatherViewModelProtocol {
     
+    var onFetchWeather: (String, Date) async throws -> Weather
+    
+    var area: Area = .Tokyo
     var isLoading = CurrentValueSubject<Bool, Never>(false)
-    var onFetchWeather: (String, Date) throws -> Weather
-    
-    func requestWeather(area: String, date: Date) async throws -> Weather {
-        try await withCheckedThrowingContinuation { continuation in
+    var weather = CurrentValueSubject<Weather?, Never>(nil)
+    var error = PassthroughSubject<Error, Never>()
+
+    func requestWeather(date: Date) {
+        Task {
+            self.isLoading.send(true)
             do {
-                continuation.resume(with: .success(try onFetchWeather(area, date)))
+                self.weather.send(try await onFetchWeather(area.rawValue, date))
             } catch {
-                continuation.resume(with: .failure(error))
+                self.error.send(error)
             }
+            self.isLoading.send(false)
         }
     }
 }
 
 class WeatherViewControllerTest: XCTestCase {
     
+    var cancellables: [AnyCancellable] = []
+
     func testSunnyIcon() async throws {
         let weatherModel = MockWeatherModel { _, date in
             Weather(name: "sunny", maxTemperature: 28, minTemperature: 1, date: date)
         }
-        let viewController = await WeatherViewController(weatherModel: weatherModel)
-        await viewController.reloadWeather()
+        let viewController = await WeatherViewController(weatherViewModel: weatherModel)
+        weatherModel.requestWeather(date: Date())
         
         let renderedImageData = await viewController.weatherIconView.image?.pngData()
         let expectedImageData = UIImage(named: "icon-sunny")?.pngData()
@@ -47,9 +49,9 @@ class WeatherViewControllerTest: XCTestCase {
         let weatherModel = MockWeatherModel { _, date in
             Weather(name: "rainy", maxTemperature: 28, minTemperature: 1, date: date)
         }
-        let viewController = await WeatherViewController(weatherModel: weatherModel)
-        await viewController.reloadWeather()
-        
+        let viewController = await WeatherViewController(weatherViewModel: weatherModel)
+        weatherModel.requestWeather(date: Date())
+
         let renderedImageData = await viewController.weatherIconView.image?.pngData()
         let expectedImageData = UIImage(named: "icon-rainy")?.pngData()
         XCTAssertNotNil(renderedImageData)
@@ -63,8 +65,8 @@ class WeatherViewControllerTest: XCTestCase {
         let weatherModel = MockWeatherModel { _, date in
             Weather(name: "cloudy", maxTemperature: 28, minTemperature: 1, date: date)
         }
-        let viewController = await WeatherViewController(weatherModel: weatherModel)
-        await viewController.reloadWeather()
+        let viewController = await WeatherViewController(weatherViewModel: weatherModel)
+        weatherModel.requestWeather(date: Date())
         
         let renderedImageData = await viewController.weatherIconView.image?.pngData()
         let expectedImageData = UIImage(named: "icon-cloudy")?.pngData()
@@ -79,8 +81,8 @@ class WeatherViewControllerTest: XCTestCase {
         let weatherModel = MockWeatherModel { _, date in
             Weather(name: "rainy", maxTemperature: 514, minTemperature: -114, date: date)
         }
-        let viewController = await WeatherViewController(weatherModel: weatherModel)
-        await viewController.reloadWeather()
+        let viewController = await WeatherViewController(weatherViewModel: weatherModel)
+        weatherModel.requestWeather(date: Date())
         
         let minTemperatureLabelText = await viewController.minTemperatureLabel.text
         let maxTemperatureLabelText = await viewController.maxTemperatureLabel.text

@@ -1,15 +1,17 @@
-//
-//  ViewController.swift
-//  yumemi-ios-training
-//
-//  Created by Zhou Chang on 2022/04/07.
-//
-
 import Combine
 import UIKit
 import SnapKit
+import YumemiWeather
 
-class WeatherViewController: UIViewController {
+protocol WeatherViewModelProtocol {
+    var area: Area { get }
+    var isLoading: CurrentValueSubject<Bool, Never> { get }
+    var weather: CurrentValueSubject<Weather?, Never> { get }
+    var error: PassthroughSubject<Error, Never> { get }
+    func requestWeather(date: Date)
+}
+
+final class WeatherViewController: UIViewController {
     
     /// A LayoutGuide contains the imageView and two temperature labels.
     let infoContainerLayoutGuide = UILayoutGuide()
@@ -32,38 +34,58 @@ class WeatherViewController: UIViewController {
     
     let activityView = UIActivityIndicatorView()
     
-    private var weatherModel: WeatherModel
-    private var loadingStateSubscription: AnyCancellable?
+    private var viewModel: WeatherViewModelProtocol
+    private var cancellables: [AnyCancellable] = []
     
-    init(weatherModel: WeatherModel) {
-        self.weatherModel = weatherModel
+    init(weatherViewModel: WeatherViewModelProtocol) {
+        self.viewModel = weatherViewModel
         super.init(nibName: nil, bundle: nil)
-        
-        loadingStateSubscription = self.weatherModel.isLoading
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
-                self?.setLoadingState(isLoading: $0)
-            }
+        subscribe()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        print("WeatherViewConrtoller was deinited.")
-    }
-    
     override func viewDidLoad() {
         addSubviewsAndConstraints()
         setViewsProperties()
+    }
+    
+    private func subscribe() {
+        viewModel.isLoading
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.setLoadingState(isLoading: $0)
+            }
+            .store(in: &cancellables)
         
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(reloadWeather),
+        viewModel.weather
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] weather in
+                if let weather = weather {
+                    self?.showWeather(weather)
+                }
+            }
+            .store(in: &cancellables)
+        
+        viewModel.error
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                self?.presentError(error, showErrorDetail: false)
+            }
+            .store(in: &cancellables)
+        
+        NotificationCenter.Publisher(
+            center: .default,
             name: UIApplication.willEnterForegroundNotification,
             object: nil
         )
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.viewModel.requestWeather(date: Date())
+            }
+            .store(in: &cancellables)
     }
     
     private func addSubviewsAndConstraints() {
@@ -122,6 +144,7 @@ class WeatherViewController: UIViewController {
     
     private func setViewsProperties() {
         view.backgroundColor = .systemBackground
+        navigationItem.title = viewModel.area.rawValue
         
         minTemperatureLabel.text = "--"
         minTemperatureLabel.textColor = .systemBlue
@@ -137,25 +160,18 @@ class WeatherViewController: UIViewController {
         
         closeButton.setTitle(NSLocalizedString("Close", comment: ""), for: .normal)
         closeButton.addAction(
-            UIAction(handler: { [weak self] _ in self?.dismiss(animated: true, completion: nil) }),
+            UIAction(handler: { [weak self] _ in
+                self?.navigationController?.popViewController(animated: true)
+            }),
             for: .touchUpInside
         )
         reloadButton.setTitle(NSLocalizedString("Reload", comment: ""), for: .normal)
         reloadButton.addAction(
-            UIAction(handler: { [weak self] _ in self?.reloadWeather() }),
+            UIAction(handler: { [weak self] _ in
+                self?.viewModel.requestWeather(date: Date())
+            }),
             for: .touchUpInside
         )
-    }
-    
-    @objc func reloadWeather() {
-        Task { [weak self] in
-            do {
-                let weather = try await weatherModel.requestWeather(area: "Tokyo", date: Date())
-                self?.showWeather(weather)
-            } catch {
-                self?.presentError(error, showErrorDetail: false)
-            }
-        }
     }
     
     private func setLoadingState(isLoading: Bool) {

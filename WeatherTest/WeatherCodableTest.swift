@@ -1,10 +1,3 @@
-//
-//  WeatherCodableTest.swift
-//  WeatherViewControllerTest
-//
-//  Created by Zhou Chang on 2022/04/19.
-//
-
 import XCTest
 @testable import yumemi_ios_training
 
